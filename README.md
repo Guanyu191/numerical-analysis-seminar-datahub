@@ -35,10 +35,12 @@
 - <u>课程形式</u>：以自学为主，每周六晚安排线上讨论班，由学员汇报进展.
 - <u>参考教材</u>：
   - [Fundamentals of Numerical Computation](https://tobydriscoll.net/fnc-julia/home.html)
-  - [A First Course in the Numerical Analysis of Differential Equations](https://www.cambridge.org/core/books/first-course-in-the-numerical-analysis-of-differential-equations/2B4E05F5CFC58CFDC7BBBC6D1150661B)
+  - [A First Course in the Numerical Analysis of Differential Equations](./ref/Iserles_A first course in the numerical analysis of differential equations.pdf)
+  - [An Introduction to Scientific Computing](./ref/An Introduction to Scientific Computing Twelve Computational Projects Solved with MATLAB.pdf)
+  - [Numerical Linear Algebra_Trefethen](./ref/1997 Numerical Linear Algebra_Trefethen.pdf)
 - <u>参考代码</u>：
-  - https://gitee.com/guanyu191/numerical-analysis-seminar-datahub
   - https://github.com/tobydriscoll/fnc-extras/tree/master/python
+  - https://gitee.com/guanyu191/numerical-analysis-seminar-datahub
 
 
 ## 课程安排
