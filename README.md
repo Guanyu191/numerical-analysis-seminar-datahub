@@ -1,26 +1,49 @@
 # 数值分析讨论班 (2025 数据谷)
 
+**作业答案** (包括文档和代码) 将上传到 `./solution/` 目录内.
+
+**学习笔记** (仅针对困难的章节) 将上传到 `./note/` 目录内.
+
+> **Log:**
+>
+> - 2025/03/22，[第一章作业参考答案](./solution/na_sol_datahub_ch1.pdf)和[代码](./solution/code/ch1/)，[第一章学习笔记](./note/).
+> - ...
+
+---
+
 ## 课程介绍
 
-近年来，随着 AI 的能力的涌现，PDE 数值方法也逐渐朝着与神经网络结合的方向发展，不仅出现了神经网络求解传统的正、反问题，还出现了由数据驱动的 Operator learning 等能够快速求解一类 PDE 的方法，我们团队也对 PDE data driven 方向非常感兴趣. 然而，如果想参与到这个方向的研究上来，单纯的 AI 背景知识是不够的，我们必须得掌握传统的 PDE 数值方法，以了解传统数值方法擅长什么、不擅长什么，才能确定我们做出来的新模型较传统方法是否具备优势. 而在学习 PDE 数值解法之前，基础的数值分析是非常有必要的，求解线性方程组相关的理论支撑着有限差分等数值格式离散过后的矩阵系统求解，插值拟合、数值积分和傅里叶变换支撑着有限元和谱方法中的系数求解，非线性方程组的零点、不动点的求解支撑着对优化求解方法的理解. 总而言之，现代 PDE 数值方法的研究离不开传统 PDE 数值方法的背景知识，而传统 PDE 数值方法又基于数值分析的基础.
+近年来，随着 AI 的能力的涌现，**PDE 数值方法**也逐渐朝着与 AI 融合的方向发展，不仅出现了求解传统正反问题的**物理信息神经网络 (Physics-Informed Neural Network, PINN)**，还出现了快速求解一类 PDE 的**算子学习方法 (Operator Learning)**. 
 
-我们本次数值分析讨论班的目标是，经过 4 个月的培训，使得团队成员能够掌握基本的数值分析知识以及一定的数值偏微分方程求解技能，并且具备可靠的 Python 编程技巧，既能够实现数值 PDE 的经典算例，又能进行基于机器学习的 PDE 求解器的编写，从而使得大部分成员在暑假前能够具备基本的 (侧重于神经网络求解 PDE) 文献理解能力和复现能力，进而在不远的将来能够参与到真正的科研项目中并且实现文章的发表.
+我们团队深耕于 **AI + PDE** 领域，希望挖掘出更多该领域的科研人才. 然而在我们的探索中发现，**"AI 辅助科学计算" 的核心仍然在于科学计算**，换句话说，我们在投入科研之前必须要有传统 PDE 数值方法的基础. 然而，无论是 PDE 数值方法还是其它计算数学相关方向，其根基又依赖于《数值分析》这门课.
 
-> **Note:** 我们的培训是公益培训，一方面我们希望培养新时代的 PDE data driven 人才，另一方面我们也希望促进知识的传播，使得学生在计算数学方向打下良好的基础. 随时可以加入，随时可以离开，但希望在学习的时候是全力以赴的.
+> **Note:** 如果想参与到 AI + PDE 的研究上来，单纯的 AI 背景知识是不够的，我们必须得掌握传统的 PDE 数值方法，以**了解传统数值方法擅长什么、不擅长什么**，才能确定我们做出来的新模型较传统方法是否具备优势. 而在学习 PDE 数值解法之前，基础的数值分析是非常有必要的.
+>
+> - 求解线性方程组相关的理论支撑着有限差分等数值格式离散过后的矩阵系统求解.
+> - 插值拟合、数值积分和傅里叶变换支撑着有限元和谱方法中的系数求解.
+> - 非线性方程组的零点、不动点的求解支撑着对优化求解方法的理解.
+>
+> 总而言之，现代 PDE 数值方法的研究离不开传统 PDE 数值方法的背景知识，而传统 PDE 数值方法又扎根于数值分析的基础.
+
+我们本次**数值分析讨论班**的目标是，经过 4 个月的培训，使得团队成员能够掌握基本的**数值分析知识**以及一定的**数值偏微分方程求解方法**，并且具备可靠的 Python 编程技巧，既能够实现数值 PDE 的经典算例，又能编写基于机器学习的 PDE 求解器，从而使得大部分成员在暑假前能够具备基本的 (侧重于神经网络求解 PDE) 文献理解能力和复现能力，进而在不远的将来能够参与到真正的科研项目中并且实现文章的发表.
+
+> **Note:** 我们的讨论班是**公益性的**，一方面我们希望培养新时代的 **AI + PDE** 人才，另一方面我们也希望促进知识的传播，使得学生在计算数学方向打下良好的基础. 随时可以加入，随时可以离开，但希望在学习的时候是全力以赴的.
 
 ## 基础信息
 
-- 课程时间：2025.03 ~ 2025.06 (约 4 个月).
-- 课程形式：以自学为主，每周六晚安排线上讨论班，由学员汇报进展.
-- 参考教材：
+- <u>课程时间</u>：2025.03 ~ 2025.06 (约 4 个月).
+- <u>课程形式</u>：以自学为主，每周六晚安排线上讨论班，由学员汇报进展.
+- <u>参考教材</u>：
   - [Fundamentals of Numerical Computation](https://tobydriscoll.net/fnc-julia/home.html)
-  - [A First Course in the Numerical Analysis of Differential Equations](https://www.cambridge.org/core/books/first-course-in-the-numerical-analysis-of-differential-equations/2B4E05F5CFC58CFDC7BBBC6D1150661B).
+  - [A First Course in the Numerical Analysis of Differential Equations](https://www.cambridge.org/core/books/first-course-in-the-numerical-analysis-of-differential-equations/2B4E05F5CFC58CFDC7BBBC6D1150661B)
+- <u>参考代码</u>：
+  - https://gitee.com/guanyu191/numerical-analysis-seminar-datahub
+  - https://github.com/tobydriscoll/fnc-extras/tree/master/python
 
-- 参考代码：https://github.com/tobydriscoll/fnc-extras/tree/master/python
 
 ## 课程安排
 
-这里以 *Fundamentals of Numerical Computation (FNC)* 为主线设置了 15 周的课程安排和作业考核，希望学员在理解算法原理的基础之上，能够熟练编程实现.
+我们以 *Fundamentals of Numerical Computation (FNC)* 为主线设置了 15 周的课程安排和作业考核，希望同学们在理解简单的算法原理的基础之上，将重心放到**编程**上来.
 
 - 需要补充的是，作业中要求完成 *FNC* 配套的所有习题，在这基础之上建议关注 "实践/作业" 栏中的剩余部分.
 - 另外，在进入 *FNC* 的第 6 章 (ODE) 之后，建议配套 *A First Course in the Numerical Analysis of Differential Equations* (第 1 ~ 10 章) 进行学习.
