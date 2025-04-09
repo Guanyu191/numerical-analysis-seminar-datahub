@@ -73,14 +73,42 @@ def lufact(A):
     return L, U
 
 
+def plufact(A):
+    """2-6
+    Compute the PLU factorization of square matrix `A`, returning the
+    triangular factors and a row permutation vector.
+    """
+    A = A.astype(float)
+    n = A.shape[0]
+    L = np.zeros((n, n))
+    U = np.zeros((n, n))
+    p = np.zeros(n).astype(int)
+    A_k = A.copy()
+
+    # Reduction by outer products
+    for k in range(n - 1):
+        p[k] = np.argmax(np.abs(A_k[:, k]))
+        U[k, :] = A_k[p[k], :]
+        L[:, k] = A_k[:, k] / U[k, k]
+        A_k -= np.outer(L[:, k], U[k, :])
+
+    p[-1] = np.argmax(np.abs(A_k[:, -1]))
+    U[-1, -1] = A_k[p[-1], -1]
+    L[:, -1] = A_k[:, -1] / U[-1, -1]
+    return L[p, :], U, p
+
+
 if __name__ == "__main__":
     A = np.array([
         [2, 3, 4], 
         [4, 5, 10], 
         [4, 8, 2]
     ])
-    L, U = lufact(A)
+    L, U, p = plufact(A)
     print("L = \n", L)
     print("U = \n", U)
+    print("p = ", p)
+    print("L @ U = \n", L @ U)
+    print("A[p, :] = \n", A[p, :])
 
 
