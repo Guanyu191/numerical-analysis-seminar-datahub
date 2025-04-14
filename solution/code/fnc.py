@@ -98,17 +98,26 @@ def plufact(A):
     return L[p, :], U, p
 
 
+def lsqrfact(A, b):
+    """3-3
+    Solve a linear least-squares problem by QR factorization.
+    Returns the minimizer of ||b-Ax||.
+    """
+    Q, R = np.linalg.qr(A)
+    c = Q.T @ b
+    x = backsub(R, c)
+    return x
+
+
+
 if __name__ == "__main__":
     A = np.array([
-        [2, 3, 4], 
-        [4, 5, 10], 
-        [4, 8, 2]
+        [2, -1], 
+        [0, 1], 
+        [-2, 2]
     ])
-    L, U, p = plufact(A)
-    print("L = \n", L)
-    print("U = \n", U)
-    print("p = ", p)
-    print("L @ U = \n", L @ U)
-    print("A[p, :] = \n", A[p, :])
+    b = np.array([1, -5, 6])
+
+    print(lsqrfact(A, b))
 
 
