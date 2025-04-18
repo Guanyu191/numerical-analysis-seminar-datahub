@@ -10,6 +10,7 @@
 > - 2025/03/24，增加了 [QA 模块](./qa/qa.md)，记录讨论班中的问题和回答. 修改第 2 周的学习内容为 2.1 ~ 2.5，第 3 周的学习内容为 2.6 ~ 2.10. 作业截止时间从当周改为延后一周.
 > - 2025/03/29，增加了[第二章第一部分作业参考答案](./solution/na_sol_datahub_ch2_1.pdf)和[代码](./solution/code/ch2-1/).
 > - 2025/04/09，增加了[第二章第二部分作业参考答案](./solution/na_sol_datahub_ch2_2.pdf)和[代码](./solution/code/ch2-2/).
+> - 2025/04/18，增加了[第三章作业参考答案](./solution/na_sol_datahub_ch3.pdf)和[代码](./solution/code/ch3/).
 > - ...
 
 ---
