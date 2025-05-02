@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 
 
@@ -108,6 +109,107 @@ def lsqrfact(A, b):
     x = backsub(R, c)
     return x
 
+
+
+
+def newton(f, dfdx, x_0, 
+           maxiter=40, 
+           ftol=100*sys.float_info.epsilon, 
+           xtol=100*sys.float_info.epsilon):
+    """4-3
+    newton(f, dfdx, x_0 [maxiter, ftol, xtol])
+
+    Use Newton's method to find a root of `f` starting from `x_0`, where
+    `dfdx` is the derivative of `f`. Returns a vector of root estimates.
+
+    The optional keyword parameters set the maximum number of iterations
+    and the stopping tolerance for values of `f` and changes in `x`.
+    """
+    x = [float(x_0)]
+    y = f(x_0)
+    delta_x = float('inf')  # for initial pass bellow
+    k = 0
+
+    while abs(delta_x) > xtol and abs(y) > ftol:
+        dydx = dfdx(x[k])
+        delta_x = -y / dydx  # Newton's step
+        x.append(x[k] + delta_x)  # append new estimate
+
+        k += 1
+        y = f(x[k])
+
+        if k == maxiter:
+            print("Warning: Maximum number of iterations reached.")
+            break
+
+    return x
+
+
+def secant(f, x_1, x_2, 
+           maxiter=40, 
+           ftol=100*sys.float_info.epsilon, 
+           xtol=100*sys.float_info.epsilon):
+    """4-4
+    secant(f, x_1, x_2 [maxiter, ftol, xtol])
+
+    Use the secant method to find a root of `f` starting from `x_1` and `x_2`.
+    Returns a list of root estimates.
+
+    The optional keyword parameters set the maximum number of iterations
+    and the stopping tolerance for values of `f` and changes in `x`.
+    """
+    x = [float(x_1), float(x_2)]
+    y_1 = f(x_1)
+    delta_x = float('inf')  # for initial pass in the loop below
+    y_2 = float('inf')
+    k = 1
+
+    while abs(delta_x) > xtol and abs(y_2) > ftol:
+        y_2 = f(x[k])
+        delta_x = -y_2 * (x[k] - x[k - 1]) / (y_2 - y_1)  # secant step
+        x.append(x[k] + delta_x)  # append new estimate
+
+        k += 1
+        y_1 = y_2  # current f-value becomes the old one next time
+
+        if k == maxiter:
+            print("Warning: Maximum number of iterations reached.")
+            break
+
+    return x
+    
+
+def iqi(f, x_1, x_2, x_3, 
+        maxiter=40, 
+        ftol=100*sys.float_info.epsilon, 
+        xtol=100*sys.float_info.epsilon):
+    """4-4
+    """
+    # inverse quadratic interpolation
+    x = [float(x_1), float(x_2), float(x_3)]
+    y_1, y_2 = f(x_1), f(x_2)
+    delta_x = float('inf')
+    y_3 = float('inf')
+    k = 1
+    
+    while abs(delta_x) > xtol and abs(y_3) > ftol:
+        y_3 = f(x_3)
+        y_values = np.array([y_1, y_2, y_3])
+        x_values = np.array([x_1, x_2, x_3])
+        coeffs = np.polyfit(y_values, x_values, 2)
+        x_new = np.polyval(coeffs, 0)
+        x.append(x_new)
+
+        delta_x = x_new - x_3
+        k += 1
+        x_1, x_2, x_3 = x_2, x_3, x_new
+        y_1, y_2 = y_2, y_3
+
+        if k == maxiter:
+            print("Warning: Maximum number of iterations reached.")
+            break
+
+    return x
 
 
 if __name__ == "__main__":
