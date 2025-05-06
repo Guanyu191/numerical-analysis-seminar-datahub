@@ -175,7 +175,6 @@ def secant(f, x_1, x_2,
         if k == maxiter:
             print("Warning: Maximum number of iterations reached.")
             break
-
     return x
     
 
@@ -208,7 +207,118 @@ def iqi(f, x_1, x_2, x_3,
         if k == maxiter:
             print("Warning: Maximum number of iterations reached.")
             break
+    return x
 
+
+import numpy as np
+
+def newtonsys(f, jac, x_0, 
+              maxiter=40, 
+              ftol=1000*np.finfo(float).eps, 
+              xtol=1000*np.finfo(float).eps):
+    """4-5
+    newtonsys(f, jac, x_0 [maxiter,ftol,xtol])
+
+    Use Newton's method to find a root of a system of equations,
+    starting from `x_0`. The functions `f` and `jac` should return the
+    residual vector and the Jacobian matrix, respectively. Returns the
+    history of root estimates as a vector of vectors.
+
+    The optional keyword parameters set the maximum number of iterations
+    and the stopping tolerance for values of `f` and changes in `x`.
+    """
+    x = [np.array(x_0, dtype=float)]
+    y, J = f(x_0), jac(x_0)
+    delta_x = np.inf  # for initial pass below
+    k = 0
+
+    while (np.linalg.norm(delta_x) > xtol) and (np.linalg.norm(y) > ftol):
+        delta_x = -np.linalg.solve(J, y)  # Newton step
+        x.append(x[k] + delta_x)  # append to history
+        k += 1
+        y, J = f(x[k]), jac(x[k])
+
+        if k == maxiter:
+            print("Warning: Maximum number of iterations reached.")
+            break
+    return x
+
+
+def fdjac(f, x_0, y_0=None):
+    """4-6
+    fdjac(f, x_0 [y_0])
+
+    Compute a finite-difference approximation of the Jacobian matrix for
+    `f` at `x_0`, where `y_0`=`f(x_0)` may be given.
+    """
+    if y_0 is None:
+        y_0 = f(x_0)
+    # FD step size
+    delta = np.sqrt(np.finfo(float).eps) * max(np.linalg.norm(x_0), 1)
+    m, n = len(y_0), len(x_0)
+    if n == 1:
+        J = (f(x_0 + delta) - y_0) / delta
+    else:
+        J = np.zeros((m, n))
+        x = x_0.copy()
+        for j in range(n):
+            x[j] += delta
+            J[:, j] = (f(x) - y_0) / delta
+            x[j] -= delta
+    return J
+
+
+def levenberg(f, x_0, maxiter=40, ftol=1e-12, xtol=1e-12):
+    """4-6
+    levenberg(f, x_0 [maxiter, ftol, xtol])
+
+    Use Levenberg's quasi-Newton iteration to find a root of the system
+    `f` starting from `x_0`. Returns the history of root estimates 
+    as a vector of vectors.
+
+    The optional keyword parameters set the maximum number of iterations
+    and the stopping tolerance for values of `f` and changes in `x`.
+
+    """
+    x = [np.array(x_0, dtype=float)]
+    y_k = f(x_0)
+    k = 0
+    s = np.inf
+    A = fdjac(f, x[k], y_k)  # start with FD Jacobian
+    jac_is_new = True
+
+    lam = 10
+    while (np.linalg.norm(s) > xtol) and (np.linalg.norm(y_k) > ftol):
+        # Compute the proposed step.
+        B = A.T @ A + lam * np.eye(len(A[0]))
+        z = A.T @ y_k
+        s = - np.linalg.solve(B, z)
+
+        x_hat = x[k] + s
+        y_hat = f(x_hat)
+
+        # Do we accept the result?
+        if np.linalg.norm(y_hat) < np.linalg.norm(y_k):  # accept
+            lam = lam / 10  # get closer to Newton
+            # Broyden update of the Jacobian.
+            s = s.reshape(-1, 1)
+            A += (y_hat.reshape(-1, 1) - y_k.reshape(-1, 1) - A @ s) @ (s.T / (s.T @ s))
+            jac_is_new = False
+
+            x.append(x_hat)
+            y_k = y_hat
+            k += 1
+        else:  # don't accept
+            # Get closer to gradient descent.
+            lam = 4 * lam
+            # Re-initialize the Jacobian if it's out of date.
+            if not jac_is_new:
+                A = fdjac(f, x[k], y_k)
+                jac_is_new = True
+
+        if k == maxiter:
+            print("Warning: Maximum number of iterations reached.")
+            break
     return x
 
 
