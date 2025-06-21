@@ -13,6 +13,7 @@
 > - 2025/04/18，增加了[第三章作业参考答案](./solution/na_sol_datahub_ch3.pdf)和[代码](./solution/code/ch3/).
 > - 2025/05/03，增加了[第四章第一部分作业参考答案](./solution/na_sol_datahub_ch4_1.pdf)和[代码](./solution/code/ch4-1/).
 > - 2025/05/06，增加了[第四章第二部分作业参考答案](./solution/na_sol_datahub_ch4_2.pdf)和[代码](./solution/code/ch4-2/).
+> - 2025/05/06，增加了[第五章作业参考答案](./solution/na_sol_datahub_ch5.pdf)和[代码](./solution/code/ch5/).
 > - ...
 
 ---
