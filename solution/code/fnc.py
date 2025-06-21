@@ -1,3 +1,4 @@
+from functools import lru_cache
 import sys
 import numpy as np
 
@@ -320,6 +321,142 @@ def levenberg(f, x_0, maxiter=40, ftol=1e-12, xtol=1e-12):
             print("Warning: Maximum number of iterations reached.")
             break
     return x
+
+
+def hatfun(t, k):
+    """5-2
+    Create a piecewise linear hat function, where `t` is a
+    vector of n+1 interpolation nodes and `k` is an integer in 0:n
+    giving the index of the node where the hat function equals one.
+    """
+    n = len(t) - 1
+    def H(x):
+        if k > 0 and t[k-1] <= x <= t[k]:
+            return (x - t[k-1]) / (t[k] - t[k-1])
+        elif k < n and t[k] <= x <= t[k+1]:
+            return (t[k+1] - x) / (t[k+1] - t[k])
+        else:
+            return 0.0
+    return np.vectorize(H)
+
+
+def plinterp(t, y):
+    """5-2
+    Construct a piecewise linear interpolating function for data values in
+    `y` given at nodes in `t`.
+    """
+    hats = [hatfun(t, k) for k in range(len(t))]
+    def p(x):
+        return sum(y[k] * hats[k](x) for k in range(len(t)))
+    return np.vectorize(p)
+
+
+def spinterp(t, y):
+    """5-3
+    Construct a cubic not-a-knot spline interpolating function for data
+    values in `y` given at nodes in `t`.
+
+    Parameters
+    ----------
+    t : 1-D array_like (length n+1, strictly increasing)
+        Node vector.
+    y : 1-D array_like (length n+1)
+        Data values f(t_k).
+
+    Returns
+    -------
+    S : callable
+        S(x) evaluates the spline at x (scalar or NumPy array).
+
+    Notes
+    -----
+    • Requires n >= 3 for non-degenerate not-a-knot conditions.  
+    • The coefficient vector is ordered [a | b | c | d], each length n.
+    """
+    t = np.asarray(t, dtype=float)
+    y = np.asarray(y, dtype=float)
+    n = t.size - 1
+    if n < 3:
+        raise ValueError("Need at least 4 nodes (n >= 3 segments) for not-a-knot spline")
+
+    h  = np.diff(t)                  # segment lengths (size n)
+    Z  = np.zeros((n, n))
+    I  = np.eye(n)
+    E  = I[:-1, :]                   # deletes last row
+    J  = I - np.diag(np.ones(n-1), k=1)   # diag(1) + super-diag(-1)
+    H  = np.diag(h)
+    H2 = np.diag(h**2)
+    H3 = np.diag(h**3)
+
+    # Assemble block rows (same order as original Julia code).
+    AL  = np.hstack([I,  Z,    Z,    Z   ])
+    AR  = np.hstack([I,  H,    H2,   H3  ])
+    A1  = E @ np.hstack([Z,  J,  2*H, 3*H2])
+    A2  = E @ np.hstack([Z,  Z,   J, 3*H ])
+    nakL = np.zeros((1, 4*n))
+    nakL[0, 3*n   ] =  1
+    nakL[0, 3*n+1 ] = -1
+    nakR = np.zeros((1, 4*n))
+    nakR[0, 4*n-2 ] =  1
+    nakR[0, 4*n-1 ] = -1
+
+    A = np.vstack([AL, AR, A1, A2, nakL, nakR])
+    v = np.concatenate([y[:-1], y[1:],            # vL, vR
+                        np.zeros(n-1), np.zeros(n-1),  # v1, v2
+                        [0.0, 0.0]])              # two not-a-knot RHS zeros
+
+    # Solve for coefficients.
+    z = np.linalg.solve(A, v)
+    a, b, c, d = np.split(z, 4)
+
+    # Evaluation routine (vectorised).
+    def S(x):
+        x = np.asarray(x, dtype=float)
+        out = np.full_like(x, np.nan, dtype=float)
+
+        m = (x >= t[0]) & (x <= t[-1])
+        if not np.any(m):
+            return out if out.shape else np.nan
+
+        xi  = x[m]
+        idx = np.searchsorted(t, xi, side='right') - 1   # segment indices
+        idx[idx == n] = n-1                              # hit the last node
+        s   = xi - t[idx]                                # local coordinate
+
+        out[m] = a[idx] + s*(b[idx] + s*(c[idx] + s*d[idx]))
+        return out if out.shape else out.item()
+
+    return S
+
+
+def fdweights(t, m):
+    """5-4
+    Compute weights for the `m`th derivative of a function at zero using
+    values at the nodes in vector `t`.
+    """
+    t = np.asarray(t, dtype=float)
+    r = len(t) - 1          # highest node index
+
+    @lru_cache(maxsize=None)
+    def weight(m_, r_, k_):
+        # Recursively compute a single weight.
+        if m_ < 0 or m_ > r_:
+            return 0.0
+        if m_ == 0 and r_ == 0:
+            return 1.0
+        if k_ < r_:
+            # “interior” recursion branch
+            return (t[r_] * weight(m_, r_-1, k_) -
+                    m_    * weight(m_-1, r_-1, k_)) / (t[r_] - t[k_])
+        else:
+            # k_ == r_  →  “last-node” recursion branch
+            numer = np.prod(t[r_-1] - t[:r_-1]) if r_ > 1 else 1.0
+            denom = np.prod(t[r_]   - t[:r_])   if r_ > 0 else 1.0
+            beta  = numer / denom
+            return beta * (m_ * weight(m_-1, r_-1, r_-1)
+                           - t[r_-1] * weight(m_, r_-1, r_-1))
+
+    return np.array([weight(m, r, k) for k in range(r + 1)], dtype=float)
 
 
 if __name__ == "__main__":
