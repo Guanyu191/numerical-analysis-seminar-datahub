@@ -3,3 +3,19 @@
 /reference/
 
 /backup/
+
+# downloaded datasets for notebooks
+**/_fnc_assets/
+
+# macOS folder icon files
+Icon
+Icon?
+
+.DS_Store
+
+# ignore later chapter notebooks
+/solution/code/ch9/
+/solution/code/ch10/
+/solution/code/ch11/
+/solution/code/ch12/
+/solution/code/ch13/
