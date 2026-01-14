@@ -13,6 +13,9 @@ Icon?
 
 .DS_Store
 
+# local maintenance scripts
+clean_*.sh
+
 # ignore later chapter notebooks
 /solution/code/ch9/
 /solution/code/ch10/
