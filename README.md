@@ -17,6 +17,7 @@
 > - 2025/08/18，增加了[第六章作业参考答案](./solution/na_sol_datahub_ch6.pdf)和[代码](./solution/code/ch6/).
 > - 2025/10/16，增加了[第七章作业参考答案](./solution/na_sol_datahub_ch7.pdf)和[代码](./solution/code/ch7/).
 > - 2026/01/09，增加了[第八章作业参考答案](./solution/na_sol_datahub_ch8.pdf)和[代码](./solution/code/ch8/).
+> - 2026/02/02，增加了[第一章学习笔记](./note/ch1)和[第二章学习笔记](./note/ch2/). 修正了参考答案 ([2.4 习题 3](./solution/code/ch2-1/2-4-lu-factorization.ipynb)).
 > - ...
 
 ---
