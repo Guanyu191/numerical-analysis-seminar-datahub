@@ -13,6 +13,9 @@ Icon?
 
 .DS_Store
 
+# Windows Explorer folder settings files
+[Dd]esktop.ini
+
 # local maintenance scripts
 clean_*.sh
 
