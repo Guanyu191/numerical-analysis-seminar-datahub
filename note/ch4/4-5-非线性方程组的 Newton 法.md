@@ -33,7 +33,7 @@
 
 上面这个例子可以手算解出来，但在实际问题里，哪怕只是证明解的存在性与唯一性，通常都很难.
 
-**#2 线性模型与 Jacobian**
+**#2 线性模型与 Jacobian (雅可比矩阵)**
 
 把求根方法推广到方程组时，我们仍然沿用同一条基本思路：构造一个容易处理的模型来近似原函数. 起点依然是线性模型. 我们从多元 Taylor 展开出发：
 
@@ -43,7 +43,7 @@ $$
 \mathbf{f}(\mathbf{x})+\mathbf{J}(\mathbf{x})\mathbf{h}+O(\|\mathbf{h}\|^2),
 $$
 
-其中 $\mathbf{J}$ 称为 $\mathbf{f}$ 的 **Jacobian matrix**，定义为
+其中 $\mathbf{J}$ 称为 $\mathbf{f}$ 的 **Jacobian matrix (雅可比矩阵)**，定义为
 
 $$
 \mathbf{J}(\mathbf{x})
