@@ -8,7 +8,7 @@
 
 当变量与方程都变成多维时，求根问题会困难得多.
 
-> **Definition:** Multidimensional rootfinding problem
+> **Definition:** **Multidimensional rootfinding problem**.
 > Given a continuous vector-valued function $\mathbf{f}$ mapping from $\mathbb{R}^n$ into $\mathbb{R}^n$, find a vector $\mathbf{r}$ such that
 > $$
 > \begin{aligned}
@@ -21,7 +21,8 @@
 
 具体问题常常用标量变量和标量方程来描述，但写成上面的向量形式会更统一.
 
-> **Example:** The steady state of interactions between the population $w(t)$ of a predator species and the population $h(t)$ of a prey species might be modeled as
+> **Example:**
+> The steady state of interactions between the population $w(t)$ of a predator species and the population $h(t)$ of a prey species might be modeled as
 > $$
 > \begin{aligned}
 > ah - b h w &= 0,\\
@@ -59,7 +60,8 @@ $$
 
 由于 Jacobian 在 Taylor 公式里扮演的角色，我们也会把 $\mathbf{J}(\mathbf{x})$ 记作 $\mathbf{f}\,'(\mathbf{x})$. 和其他导数一样，它也是 $\mathbf{x}$ 的函数.
 
-> **Example:** Let
+> **Example:**
+> Let
 > $$
 > \begin{aligned}
 > f_1(x_1,x_2,x_3) &= -x_1\cos(x_2) - 1,\\
@@ -121,7 +123,7 @@ $$
 
 注意 $\mathbf{J}^{-1}\mathbf{f}$ 在这里扮演了一维情形 $f/f'$ 的角色 (在一维时两者确实一致). 但在数值计算中，我们不会去算矩阵逆，而是解线性系统.
 
-> **Algorithm:** Multidimensional Newton's method
+> **Algorithm:** **Multidimensional Newton's method**.
 > Given $\mathbf{f}$ and a starting value $\mathbf{x}_1$, for each $k=1,2,3,\ldots$
 > 1. Compute $\mathbf{y}_k = \mathbf{f}(\mathbf{x}_k)$ and $\mathbf{A}_k=\mathbf{f}\,'(\mathbf{x}_k)$.
 > 2. Solve the linear system $\mathbf{A}_k\mathbf{s}_k = -\mathbf{y}_k$ for the **Newton step** $\mathbf{s}_k$.
@@ -133,7 +135,7 @@ $$
 
 下面给出 Newton 方程组版本的一个直接实现：输入残差函数与 Jacobian，输出整个迭代历史.
 
-> **Function:** newtonsys
+> **Function:** **newtonsys**.
 > **Newton's method for a system of equations**
 > ```Python
 > import numpy as np
@@ -171,7 +173,7 @@ $$
 >     return xs
 > ```
 
-> **Demo:** Quadratic convergence in a nonlinear system.
+> **Demo:** **Quadratic convergence in a nonlinear system**.
 > ```Python
 > import numpy as np
 >

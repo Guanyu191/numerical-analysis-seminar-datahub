@@ -20,7 +20,7 @@ $$
 
 这引出了我们的第三类典型 PDE：Laplace 方程，以及更一般的 Poisson 方程. 二维 Poisson 方程写作
 
-> **Definition:** Laplace and Poisson equations
+> **Definition:** **Laplace and Poisson equations**.
 > The two-dimensional Poisson equation is
 > $$
 > u_{xx}+u_{yy}=f(x,y).
@@ -51,7 +51,7 @@ $$
 
 **#3 Kronecker 积**
 
-> **Definition:** Kronecker product
+> **Definition:** **Kronecker product**.
 > Let $\mathbf{A}$ be $m\times n$ and $\mathbf{B}$ be $p\times q$. The Kronecker product $\mathbf{A}\otimes\mathbf{B}$ is the $mp\times nq$ matrix given by
 > $$
 > \mathbf{A}\otimes\mathbf{B}
@@ -64,7 +64,7 @@ $$
 > \end{bmatrix}.
 > $$
 
-> **Demo:** Kronecker product in NumPy
+> **Demo:** **Kronecker product in NumPy**.
 > ```Python
 > import numpy as np
 >
@@ -78,7 +78,7 @@ $$
 
 Kronecker 积满足很多看起来 "顺理成章" 的恒等式：
 
-> **Theorem:** Kronecker product identities
+> **Theorem:** **Kronecker product identities**.
 > For matrices of compatible sizes, the following hold:
 >
 > 1. $\mathbf{A}\otimes(\mathbf{B}+\mathbf{C})=\mathbf{A}\otimes\mathbf{B}+\mathbf{A}\otimes\mathbf{C}$.
@@ -135,7 +135,7 @@ $$
 
 **#6 Demo：稀疏结构与边界行替换**
 
-> **Demo:** Building the Poisson linear system and applying Dirichlet rows
+> **Demo:** **Building the Poisson linear system and applying Dirichlet rows**.
 > ```Python
 > import numpy as np
 > import scipy.sparse as sp
@@ -202,7 +202,7 @@ $$
 
 **#7 一个通用实现：poissonfd**
 
-> **Function:** poissonfd
+> **Function:** **poissonfd**.
 > **Solve Poisson's equation on a rectangle by finite differences**
 > ```Python
 > import numpy as np
@@ -273,7 +273,7 @@ $$
 
 **#8 Demo：先选解再构造 forcing**
 
-> **Demo:** A manufactured solution for Poisson's equation
+> **Demo:** **A manufactured solution for Poisson's equation**.
 > We choose an exact solution first and derive the forcing term.
 >
 > ```Python

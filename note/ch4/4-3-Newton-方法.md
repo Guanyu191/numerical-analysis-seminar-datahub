@@ -8,7 +8,7 @@
 
 在求根问题里，**Newton's method** 是最核心的方法之一. 它的关键想法是：在当前近似点 $x_k$ 处用切线去近似 $f$，然后用 "切线的根" 作为新的近似 $x_{k+1}$.
 
-> **Demo:** Tangent line approximation
+> **Demo:** **Tangent line approximation**.
 > Suppose we want to find a root of $f(x)=x e^x-2$. From the graph, there is a root near $x=1$, so we take $x_1=1$ as an initial guess.
 >
 > ```Python
@@ -57,7 +57,7 @@ $$
 
 求 $q(x)=0$ 是容易的，并由 $q(x_{k+1})=0$ 得到 Newton 迭代：
 
-> **Algorithm:** Newton's method
+> **Algorithm:** **Newton's method**.
 > Given a function $f$, its derivative $f'$, and an initial value $x_1$, iteratively define
 > $$
 > x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)},\qquad k=1,2,\dots.
@@ -95,7 +95,45 @@ f'(r+\epsilon_k)
 f'(r)+\epsilon_k f''(r)+O(\epsilon_k^2).
 $$
 
-再利用 $f(r)=0$，并额外假设 $r$ 是 **simple root** (即 $f'(r)\ne 0$)，可以得到
+再利用 $f(r)=0$，并额外假设 $r$ 是 **simple root** (即 $f'(r)\ne 0$). 我们把分子分母都整理成 "1 + 小量" 的形式：
+
+$$
+f(r+\epsilon_k)
+=
+\epsilon_k f'(r)\left(1+\frac{1}{2}\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)\right),
+$$
+
+$$
+f'(r+\epsilon_k)
+=
+f'(r)\left(1+\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)\right).
+$$
+
+因此
+
+$$
+\frac{f(r+\epsilon_k)}{f'(r+\epsilon_k)}
+=
+\epsilon_k
+\left(1+\frac{1}{2}\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)\right)
+\left(1+\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)\right)^{-1}.
+$$
+
+对小量 $z$ 有 $(1+z)^{-1}=1-z+O(z^2)$. 代入 $z=\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)$ 并只保留最低阶项，得到
+
+> **Note:** 这里用到几何级数：当 $|z|<1$ 时，
+> $$
+> \frac{1}{1+z}=1-z+z^2-z^3+\cdots.
+> $$
+> 因此只保留到一阶项就得到 $(1+z)^{-1}=1-z+O(z^2)$. 在我们的推导里，$z=\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)$，当迭代逐渐接近根时 $\epsilon_k\to 0$，于是 $|z|<1$ 最终会成立.
+
+$$
+\frac{f(r+\epsilon_k)}{f'(r+\epsilon_k)}
+=
+\epsilon_k\left(1-\frac{1}{2}\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)\right).
+$$
+
+把它代回 $\epsilon_{k+1}=\epsilon_k-\dfrac{f(r+\epsilon_k)}{f'(r+\epsilon_k)}$，就得到误差递推
 
 $$
 \epsilon_{k+1}
@@ -105,14 +143,14 @@ $$
 
 因此在渐近区间内，Newton 方法的误差会被大致平方.
 
-> **Observation:** Error squaring in Newton's method
+> **Observation:** **Error squaring in Newton's method**.
 > Asymptotically, each iteration of Newton's method roughly squares the error.
 
 **#4 二次收敛与数值判别**
 
 为了形式化刻画 "误差平方" 这件事，我们引入二次收敛.
 
-> **Definition:** Quadratic convergence
+> **Definition:** **Quadratic convergence**.
 > Suppose a sequence $x_k$ approaches limit $x^*$. If the error sequence $\epsilon_k=x_k-x^*$ satisfies
 > $$
 > \lim_{k\to\infty}\frac{|\epsilon_{k+1}|}{|\epsilon_k|^2}=L
@@ -125,7 +163,7 @@ $$
 \frac{\log|\epsilon_{k+1}|}{\log|\epsilon_k|}\to 2,\qquad (k\to\infty).
 $$
 
-> **Demo:** Quadratic convergence in practice
+> **Demo:** **Quadratic convergence in practice**.
 > We revisit $f(x)=x e^x-2$ and compute Newton iterates using extended precision so that we can observe several squaring steps beyond machine precision.
 >
 > ```Python
@@ -170,16 +208,11 @@ $$
 
 **#5 一个可复用的实现：把问题与算法分离**
 
-在实现 Newton 方法时，我们通常把 "问题定义 (f 与 f')" 与 "算法 (Newton 迭代)" 分开：同一段算法代码可以复用在不同的求根问题上；并且我们也更容易对同一问题尝试多种求根算法.
+在实现 Newton 方法时，我们通常把 "问题定义 (函数 $f$ 及其导数 $f'$)" 和 "算法 (Newton 迭代)" 分开：同一段算法代码可以复用在不同的求根问题上；并且我们也更容易对同一问题尝试多种求根算法.
 
-另外还有一个实际问题：如何决定停止迭代. 真实误差 $|x_k-r|$ 不可直接计算，因此常用两个替代指标：
+下面给出一个简单实现.
 
-- 相邻两次近似之差 $|x_k-x_{k-1}|$ (把它当作误差的 proxy).
-- 残差 $|f(x_k)|$ (在 **4-1-求根问题** 的语境下，它更接近一种可控的反向误差指标).
-
-再加上最大迭代次数作为安全阀，就构成一个可用的停止准则.
-
-> **Function:** newton
+> **Function:** **newton**.
 > **Newton's method for a scalar rootfinding problem**
 > ```Python
 > import numpy as np
@@ -221,7 +254,7 @@ $$
 >     return np.array(xs)
 > ```
 
-> **Note:** 当 $f'(x_k)=0$ 或非常接近 0 时，Newton 步 $\Delta x=-f(x_k)/f'(x_k)$ 会变得不可用或极不稳定. 这种情形下通常需要换初值，或改用带 bracket 的方法 (见 **4-4-基于插值的方法**)，或用阻尼 / quasi-Newton (见 **4-6-拟 Newton 方法**).
+> **Note:** 当 $f'(x_k)=0$ 或非常接近 0 时，Newton 步 $\Delta x=-f(x_k)/f'(x_k)$ 就不再可靠. 这时通常要换一个初值，或者换一种方法.
 
 **#6 用 Newton 方法数值计算反函数**
 
@@ -237,25 +270,26 @@ $$
 f_y(x)=g(x)-y=0.
 $$
 
-> **Demo:** Function and its inverse
+> **Demo:** **Function and its inverse**.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
->
+> 
 > def g(x):
->     return np.exp(x) - x
->
+>  return np.exp(x) - x
+> 
 > def dgdx(x):
->     return np.exp(x) - 1.0
->
+>  return np.exp(x) - 1.0
+> 
 > ys = np.linspace(g(0.0), g(2.0), 200)
 > xs = np.zeros_like(ys)
->
+> 
 > for i, y in enumerate(ys):
->     fy = lambda x, y=y: g(x) - y
->     it = newton(fy, dgdx, x1=y)
->     xs[i] = it[-1]
->
+>  fy = lambda x, y=y: g(x) - y
+>  it = newton(fy, dgdx, x1=y)
+>  xs[i] = it[-1]
+> 
 > grid = np.linspace(0.0, 2.0, 400)
 > plt.figure()
 > plt.plot(grid, g(grid), label="g(x)", lw=2)

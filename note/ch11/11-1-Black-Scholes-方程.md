@@ -62,7 +62,7 @@ $$
 
 Black-Scholes 方程可以通过变量替换化为更简单的典型 PDE.
 
-> **Definition:** Heat equation
+> **Definition:** **Heat equation**.
 >
 > The heat equation or diffusion equation in one dimension is
 > $$
@@ -154,7 +154,7 @@ $$
 
 从而解出虚拟点 $V_{m+1,j}$，并把它代回显式格式的右端.
 
-> **Demo:** A finite-difference solver for the Black-Scholes IBVP
+> **Demo:** **A finite-difference solver for the Black-Scholes IBVP**.
 > We set parameters, discretize, and then march forward in (transformed) time.
 >
 > ```Python
@@ -213,7 +213,7 @@ $$
 
 上面的 Demo 看起来一切顺利. 但问题很快会出现.
 
-> **Demo:** The same scheme can become unstable for a longer horizon
+> **Demo:** **The same scheme can become unstable for a longer horizon**.
 > We repeat the same computation but extend the simulation time to $T=8$.
 >
 > ```Python

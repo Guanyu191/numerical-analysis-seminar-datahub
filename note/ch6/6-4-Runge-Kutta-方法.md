@@ -88,7 +88,7 @@ $$
 
 这就给出了一个新的二阶一步法: improved Euler.
 
-> **Definition:** Improved Euler method (IE2)
+> **Definition:** **Improved Euler method (IE2)**.
 > $$
 > u_{i+1}
 > =
@@ -113,7 +113,7 @@ $$
 
 **#3 一个实现**
 
-> **Function:** ie2
+> **Function:** **ie2**.
 > **Improved Euler method for an IVP**
 > ```Python
 > import numpy as np
@@ -192,7 +192,7 @@ $$
 
 最常用的 RK 方法是下面这个四阶方法，通常就被称作 "四阶 RK"，我们记为 RK4.
 
-> **Definition:** Fourth-order Runge-Kutta method (RK4)
+> **Definition:** **Fourth-order Runge-Kutta method (RK4)**.
 > $$
 > \begin{aligned}
 > k_1 &= h f(t_i,u_i),\\
@@ -203,7 +203,7 @@ $$
 > \end{aligned}
 > $$
 
-> **Function:** rk4
+> **Function:** **rk4**.
 > **Fourth-order Runge-Kutta for an IVP**
 > ```Python
 > import numpy as np
@@ -235,7 +235,7 @@ $$
 
 误差会随 $n$ 的增加呈几何下降，因此用更多 stage 换取更高精度阶往往划算. 但 stage 数越大，并不意味着精度阶可以无限增长：当 $s=5,6,7$ 时，最高精度阶是 $s-1$；当 $s=8,9$ 时，最高精度阶降为 $s-2$，等等. 在很多应用中，四阶被认为是足够且性价比很高的选择.
 
-> **Demo:** Convergence comparison by f-evaluations.
+> **Demo:** **Convergence comparison by f-evaluations**.
 > We compare IE2 and RK4 on the IVP $u'=\sin((u+t)^2)$ over $0\le t\le 4$, $u(0)=-1$.
 > ```Python
 > import numpy as np

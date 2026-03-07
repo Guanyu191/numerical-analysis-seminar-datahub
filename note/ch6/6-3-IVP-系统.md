@@ -10,7 +10,7 @@
 
 生态学中常见的一个模型变体是
 
-> **Example:** A predator-prey model
+> **Example:** **A predator-prey model**.
 > $$
 > \begin{aligned}
 > \frac{dy}{dt} &= y(1-\alpha y)-\frac{yz}{1+\beta y},\\[2mm]
@@ -40,7 +40,7 @@ $$
 
 **#2 向量值 IVP 的定义**
 
-> **Definition:** Vector-valued IVP / IVP system
+> **Definition:** **Vector-valued IVP / IVP system**.
 > A vector-valued first-order initial-value problem (IVP) is
 > $$
 > \mathbf{u}'(t)=\mathbf{f}\bigl(t,\mathbf{u}(t)\bigr),\quad a\le t\le b,\qquad \mathbf{u}(a)=\mathbf{u}_0,
@@ -61,7 +61,7 @@ $$
 
 这只是把 Euler 公式同步应用到每个分量上. 因为向量加法、标量乘法等运算与标量情形一一对应，**6-2-Euler-方法** 里的 `euler` 实现不需要改动就能用于系统；实际要改的只是：初值与右端函数都要用向量来编码.
 
-> **Demo:** Solving the predator-prey system.
+> **Demo:** **Solving the predator-prey system**.
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -126,7 +126,7 @@ $$
 
 当系统只有两个分量时，我们常把解画在相平面 (phase plane) 中：用 $u_1$ 与 $u_2$ 作坐标轴，把时间看作曲线参数.
 
-> **Demo:** Predator-prey in the phase plane.
+> **Demo:** **Predator-prey in the phase plane**.
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -169,7 +169,7 @@ $$
 
 一旦我们能够求解一阶 ODE 系统，也就能求解更高阶的 ODE 系统. 原因是：我们总能把高阶问题系统地改写成更高维的一阶系统.
 
-> **Example:** Turning a second-order IVP into a first-order system
+> **Example:** **Turning a second-order IVP into a first-order system**.
 > Consider
 > $$
 > y''+(1+y')^3y=0,\qquad y(0)=y_0,\qquad y'(0)=0.
@@ -182,7 +182,7 @@ $$
 
 下面给出一个来自力学的例子：两只摆通过同一根杆耦合.
 
-> **Example:** Coupled pendulums
+> **Example:** **Coupled pendulums**.
 > Two identical pendulums can be modeled as the second-order system
 > $$
 > \begin{aligned}
@@ -218,7 +218,7 @@ $$
 
 **#5 耦合摆的一个演示**
 
-> **Demo:** Coupled pendulums (uncoupled vs coupled).
+> **Demo:** **Coupled pendulums (uncoupled vs coupled)**.
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt

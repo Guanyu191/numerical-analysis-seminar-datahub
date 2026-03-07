@@ -6,7 +6,7 @@
 
 **#1 一阶标量初值问题**
 
-> **Definition:** Initial-value problem (scalar)
+> **Definition:** **Initial-value problem (scalar)**.
 > $$
 > u'(t)=f\bigl(t,u(t)\bigr),\quad a\le t\le b,\qquad u(a)=u_0.
 > $$
@@ -25,7 +25,7 @@ $$
 
 **#2 一个种群模型例子**
 
-> **Example:** Population growth and the logistic equation.
+> **Example:** **Population growth and the logistic equation**.
 > Suppose $u(t)$ is the size of a population at time $t$. We idealize by allowing $u$ to take any real value. If we assume a constant per capita birth rate, then
 > $$
 > \frac{du}{dt}=ku,\qquad u(0)=u_0,
@@ -68,7 +68,7 @@ $$
 
 **#3 数值解的基本形态**
 
-> **Demo:** Solving an IVP numerically.
+> **Demo:** **Solving an IVP numerically**.
 > We solve the IVP
 > $$
 > u'=\sin\bigl((u+t)^2\bigr),\quad t\in[0,4],\qquad u(0)=-1.
@@ -121,7 +121,7 @@ $$
 
 这类非线性方程，解可能在有限时间内 blow up (发散到无穷大).
 
-> **Demo:** Finite-time blowup.
+> **Demo:** **Finite-time blowup**.
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -154,19 +154,19 @@ $$
 
 我们也可以构造一个 IVP，使它有不止一个解.
 
-> **Example:** Multiple solutions.
+> **Example:** **Multiple solutions**.
 > The functions $u(t)=t^2$ and $u(t)\equiv 0$ both satisfy the differential equation $u'=2\sqrt{u}$ and the initial condition $u(0)=0$. Thus the corresponding IVP has more than one solution.
 
 下面的标准定理给出一个容易检查、并能保证唯一解存在的条件 (但它不是最一般的条件，因此也可能漏掉一些确实有唯一解的情况).
 
-> **Theorem:** Existence and uniqueness
+> **Theorem:** **Existence and uniqueness**.
 > If the derivative $\partial f/\partial u$ exists and $\left|\partial f/\partial u\right|$ is bounded by a constant $L$ for all $t$ with $a\le t\le b$ and all $u$, then the initial-value problem has a unique solution for $t\in[a,b]$.
 
 **#5 初值扰动与条件数**
 
 在数值计算中，我们还需要关心 IVP 的条件数. 对一阶 IVP 来说，(数据) 至少包含两部分：函数 $f(t,u)$ 与初值 $u_0$. 讨论 "扰动一个数" 比 "扰动一个函数" 更直接，因此这里聚焦初值扰动 $u_0\mapsto u_0+\delta$ 对解的影响.
 
-> **Theorem:** Dependence on initial value
+> **Theorem:** **Dependence on initial value**.
 > If the derivative $\partial f/\partial u$ exists and $\left|\partial f/\partial u\right|$ is bounded by a constant $L$ for all $t$ with $a\le t\le b$ and all $u$, then the solution $u(t;u_0+\delta)$ of $u'=f(t,u)$ with initial condition $u(a)=u_0+\delta$ satisfies
 > $$
 > \|u(t;u_0+\delta)-u(t;u_0)\|_\infty \le |\delta| e^{L(b-a)}
@@ -175,7 +175,7 @@ $$
 
 数值解必然会有误差，而这些误差可以视为对解的扰动. 上面的定理给出了一个上界：$e^{L(b-a)}$ 可以作为 "解对初值扰动" 的 (逐点) 绝对条件数上界. 但这个上界可能会严重高估某个具体问题的实际敏感性.
 
-> **Demo:** A bound can be very pessimistic.
+> **Demo:** **A bound can be very pessimistic**.
 > Consider $u'=u$ and $u'=-u$. In both cases, $\partial f/\partial u=\pm 1$, so the bound from the theorem is $e^{b-a}$. But the behaviors differ.
 > ```Python
 > import numpy as np

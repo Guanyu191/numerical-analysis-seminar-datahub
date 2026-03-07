@@ -42,7 +42,7 @@ $$
 
 关于步长 $\delta$ 的选取，在第 5 章会给出解释：通常把 $\delta$ 选在 $\sqrt{\epsilon}$ 的量级，其中 $\epsilon$ 表示对 $\mathbf{f}$ 的评估中预期的噪声或不确定性. 如果噪声唯一来源是浮点舍入误差，那么可以用 $\delta\approx \sqrt{\epsilon_{\rm mach}}$.
 
-> **Function:** fdjac
+> **Function:** **fdjac**.
 > **Finite-difference approximation of a Jacobian**
 > ```Python
 > import numpy as np
@@ -108,7 +108,7 @@ $$
 
 这仍不足以唯一确定 $\mathbf{A}_{k+1}$. 但如果我们额外要求 $\mathbf{A}_{k+1}-\mathbf{A}_k$ 是一个秩为 1 的矩阵，就会得到下面的更新公式.
 
-> **Definition:** Broyden update formula
+> **Definition:** **Broyden update formula**.
 > $$
 > \mathbf{A}_{k+1}
 > =
@@ -136,7 +136,7 @@ $$
 -\mathbf{A}_k^{T}\mathbf{y}_k.
 $$
 
-> **Algorithm:** Levenberg's method
+> **Algorithm:** **Levenberg's method**.
 > Given $\mathbf{f}$, a starting value $\mathbf{x}_1$, and a scalar $\lambda$, for each $k=1,2,3,\ldots$
 > 1. Compute $\mathbf{y}_k=\mathbf{f}(\mathbf{x}_k)$, and let $\mathbf{A}_k$ be an exact or approximate Jacobian matrix.
 > 2. Solve $\bigl(\mathbf{A}_k^{T}\mathbf{A}_k+\lambda \mathbf{I}\bigr)\mathbf{s}_k=-\mathbf{A}_k^{T}\mathbf{y}_k$ for $\mathbf{s}_k$.
@@ -188,7 +188,7 @@ $$
 
 每次循环会先用上面的 Levenberg 线性系统提出一个步长 $\mathbf{s}_k$. 然后检查使用该步长是否会使 $\|\mathbf{f}\|_2$ 下降：如果下降，就接受新点，降低 $\lambda$ 以更接近 Newton 行为，并用 Broyden 公式廉价更新 Jacobian；如果不下降，就增大 $\lambda$ 以更接近梯度下降，并在必要时用有限差分重新计算 Jacobian.
 
-> **Function:** levenberg
+> **Function:** **levenberg**.
 > **Quasi-Newton method for nonlinear systems**
 > ```Python
 > import numpy as np
@@ -247,7 +247,7 @@ $$
 
 在某些问题里，这个简单逻辑可能会让 $\lambda$ 在大与小之间来回振荡；在实践中有更复杂也更稳健的控制策略. 另外，上面的线性系统通常会再做一点修改，从而得到著名的 **Levenberg-Marquardt algorithm**，它在某些问题中表现更好.
 
-> **Demo:** Solving a nonlinear system without coding a Jacobian.
+> **Demo:** **Solving a nonlinear system without coding a Jacobian**.
 > ```Python
 > import numpy as np
 >
