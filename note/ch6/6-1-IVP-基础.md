@@ -162,9 +162,9 @@ $$
 > **Theorem:** Existence and uniqueness
 > If the derivative $\partial f/\partial u$ exists and $\left|\partial f/\partial u\right|$ is bounded by a constant $L$ for all $t$ with $a\le t\le b$ and all $u$, then the initial-value problem has a unique solution for $t\in[a,b]$.
 
-**#5 初值扰动与条件性**
+**#5 初值扰动与条件数**
 
-在数值计算中，我们还需要关心 IVP 的条件性. 对一阶 IVP 来说，(数据) 至少包含两部分：函数 $f(t,u)$ 与初值 $u_0$. 讨论 "扰动一个数" 比 "扰动一个函数" 更直接，因此这里聚焦初值扰动 $u_0\mapsto u_0+\delta$ 对解的影响.
+在数值计算中，我们还需要关心 IVP 的条件数. 对一阶 IVP 来说，(数据) 至少包含两部分：函数 $f(t,u)$ 与初值 $u_0$. 讨论 "扰动一个数" 比 "扰动一个函数" 更直接，因此这里聚焦初值扰动 $u_0\mapsto u_0+\delta$ 对解的影响.
 
 > **Theorem:** Dependence on initial value
 > If the derivative $\partial f/\partial u$ exists and $\left|\partial f/\partial u\right|$ is bounded by a constant $L$ for all $t$ with $a\le t\le b$ and all $u$, then the solution $u(t;u_0+\delta)$ of $u'=f(t,u)$ with initial condition $u(a)=u_0+\delta$ satisfies

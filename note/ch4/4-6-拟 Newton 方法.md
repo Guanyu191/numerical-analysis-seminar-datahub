@@ -167,7 +167,7 @@ $$
 =
 \mathbf{f}(\mathbf{x})^{T}\mathbf{f}(\mathbf{x})
 =
-\|\mathbf{f}(\mathbf{x})\|^2.
+\|\mathbf{f}(\mathbf{x})\|_2^2.
 $$
 
 求解 $\mathbf{f}(\mathbf{x})=\boldsymbol{0}$ 等价于最小化 $\phi(\mathbf{x})$. 计算可得它的梯度为
@@ -186,7 +186,7 @@ $$
 
 把有限差分、Jacobian 更新、以及 Levenberg 步长控制结合起来，是相互独立的决策. 下面的实现展示了它们如何组合在一起，也是目前为止逻辑最复杂的例程之一.
 
-每次循环会先用上面的 Levenberg 线性系统提出一个步长 $\mathbf{s}_k$. 然后检查使用该步长是否会使 $\|\mathbf{f}\|$ 下降：如果下降，就接受新点，降低 $\lambda$ 以更接近 Newton 行为，并用 Broyden 公式廉价更新 Jacobian；如果不下降，就增大 $\lambda$ 以更接近梯度下降，并在必要时用有限差分重新计算 Jacobian.
+每次循环会先用上面的 Levenberg 线性系统提出一个步长 $\mathbf{s}_k$. 然后检查使用该步长是否会使 $\|\mathbf{f}\|_2$ 下降：如果下降，就接受新点，降低 $\lambda$ 以更接近 Newton 行为，并用 Broyden 公式廉价更新 Jacobian；如果不下降，就增大 $\lambda$ 以更接近梯度下降，并在必要时用有限差分重新计算 Jacobian.
 
 > **Function:** levenberg
 > **Quasi-Newton method for nonlinear systems**
