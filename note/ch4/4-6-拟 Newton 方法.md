@@ -73,7 +73,7 @@ $$
 >     return J
 > ```
 >
-> **Note：** 代码里用 `max(||x0||, 1)` 做尺度归一化，是为了避免在 $x_0$ 很小 (例如接近 $\mathbf{0}$) 时步长过小.
+> **Note:** 代码里用 `max(||x0||, 1)` 做尺度归一化，是为了避免在 $x_0$ 很小 (例如接近 $\mathbf{0}$) 时步长过小.
 
 **#3 Broyden 更新**
 
@@ -105,7 +105,7 @@ $$
 \mathbf{A}_{k+1}\mathbf{s}_k.
 $$
 
-> **Note：** 简单来说，当我们有了当前的近似解 $\mathbf{x}_k$ 和近似的 Jacobian $\mathbf{A}_k$ 后，先用当前的 "斜率" $\mathbf{A}_k$ 在 $\mathbf{x}_k$ 做线性近似，得到一个近似根 $\mathbf{x}_{k+1}$. 接着计算 $\mathbf{y}_{k+1}=\mathbf{f}(\mathbf{x}_{k+1})$，再根据 $(\mathbf{x}_k,\mathbf{y}_k)$ 和 $(\mathbf{x}_{k+1},\mathbf{y}_{k+1})$ 这两个点来更新新的 "斜率" $\mathbf{A}_{k+1}$，这样就完成了一轮更新.
+> **Note:** 简单来说，当我们有了当前的近似解 $\mathbf{x}_k$ 和近似的 Jacobian $\mathbf{A}_k$ 后，先用当前的 "斜率" $\mathbf{A}_k$ 在 $\mathbf{x}_k$ 做线性近似，得到一个近似根 $\mathbf{x}_{k+1}$. 接着计算 $\mathbf{y}_{k+1}=\mathbf{f}(\mathbf{x}_{k+1})$，再根据 $(\mathbf{x}_k,\mathbf{y}_k)$ 和 $(\mathbf{x}_{k+1},\mathbf{y}_{k+1})$ 这两个点来更新新的 "斜率" $\mathbf{A}_{k+1}$，这样就完成了一轮更新.
 
 但是这仍不足以唯一地确定 $\mathbf{A}_{k+1}$. 但如果我们额外要求 $\mathbf{A}_{k+1}$ 是由 $\mathbf{A}_k$ 再加上一个 **秩为 1** 的矩阵得到的，那么就会有如下的更新公式.
 
@@ -119,7 +119,7 @@ $$
 > \bigl(\mathbf{y}_{k+1}-\mathbf{y}_k-\mathbf{A}_k\mathbf{s}_k\bigr)\mathbf{s}_k^{T}.
 > $$
 
-> **Note：** 这个公式可以直接从 "秩为 1 的修正 + 割线条件" 推出. 设
+> **Note:** 这个公式可以直接从 "秩为 1 的修正 + 割线条件" 推出. 设
 > $$
 > \mathbf{A}_{k+1}=\mathbf{A}_k+\mathbf{u}\mathbf{v}^{T}.
 > $$
@@ -294,4 +294,4 @@ $$
 > ```
 > The ratios typically settle between 1 and 2, indicating a convergence rate between linear and quadratic.
 
-> **Note：** 这个方法的一个主要收益是：我们只需要写 $\mathbf{f}$，而不需要显式写 Jacobian (对照 **4-5-非线性方程组的 Newton 法** 里的 `newtonsys`). 同时，收敛速度通常介于线性与二次之间，类似于一维割线法.
+> **Note:** 这个方法的一个主要收益是：我们只需要写 $\mathbf{f}$，而不需要显式写 Jacobian (对照 **4-5-非线性方程组的 Newton 法** 里的 `newtonsys`). 同时，收敛速度通常介于线性与二次之间，类似于一维割线法.
