@@ -148,6 +148,7 @@ $$
 下面给出一个用于演示的基础实现：它每次都做一步 Arnoldi，然后解一次小的最小二乘问题来得到新的 $\mathbf{x}_m$，并记录残差范数.
 
 > **Function:** **gmres_demo**. **GMRES for a linear system (demo-only)**
+>
 > ```Python
 > import numpy as np
 >
@@ -255,4 +256,4 @@ $$
 
 除了重启之外，也存在一些避免 GMRES/Arnoldi 迭代中计算量持续增长的变体. 比较常见的缩写包括 CGS, BiCGSTAB, QMR. 本仓库暂不展开.
 
-> **Note:** GMRES 的前身之一是 MINRES，会在 **8-6-MINRES-与-共轭梯度** 出现.
+> **Note?** GMRES 的前身之一是 MINRES，会在 **8-6-MINRES-与-共轭梯度** 出现.

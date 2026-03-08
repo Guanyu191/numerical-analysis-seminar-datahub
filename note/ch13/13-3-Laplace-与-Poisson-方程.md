@@ -61,8 +61,9 @@ $$
 > A_{m1}\mathbf{B} & A_{m2}\mathbf{B} & \cdots & A_{mn}\mathbf{B}
 > \end{bmatrix}.
 > $$
-
+>
 > **Demo:** **Kronecker product in NumPy**.
+>
 > ```Python
 > import numpy as np
 >
@@ -134,6 +135,7 @@ $$
 **#6 Demo：稀疏结构与边界行替换**
 
 > **Demo:** **Building the Poisson linear system and applying Dirichlet rows**.
+>
 > ```Python
 > import numpy as np
 > import scipy.sparse as sp
@@ -201,6 +203,7 @@ $$
 **#7 一个通用实现：poissonfd**
 
 > **Function:** **poissonfd**. **Solve Poisson's equation on a rectangle by finite differences**
+>
 > ```Python
 > import numpy as np
 > import scipy.sparse as sp
@@ -266,7 +269,7 @@ $$
 >     return x, y, U
 > ```
 >
-> > **Note:** 对 Dirichlet 行做缩放相当于把边界条件写成 $\sigma u=\sigma g$. 这样做的动机是让边界行与 PDE 行的系数规模接近，从而改善线性系统的数值性态.
+> > **Note?** 对 Dirichlet 行做缩放相当于把边界条件写成 $\sigma u=\sigma g$. 这样做的动机是让边界行与 PDE 行的系数规模接近，从而改善线性系统的数值性态.
 
 **#8 Demo：先选解再构造 forcing**
 

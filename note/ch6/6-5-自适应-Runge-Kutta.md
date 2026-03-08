@@ -43,6 +43,7 @@ $$
 **#3 自适应步长算法框架**
 
 > **Algorithm:** **Adaptive step size for an IVP**. Given a solution estimate $u_i$ at $t=t_i$ and a step size $h$:
+>
 > 1. Produce estimates $u_{i+1}$ and $\tilde u_{i+1}$, and estimate the error.
 > 2. If the error is small enough, adopt $\tilde u_{i+1}$ as the solution value at $t=t_i+h$, then increment $i$.
 > 3. Replace $h$ by $qh$, with $q$ given by a step size prediction rule.
@@ -77,6 +78,7 @@ $$
 下面给出一个 embedded 二/三阶自适应求解器 `rk23`. 它采用 BS23 公式对，并使用 $q=(\epsilon/E)^{1/3}$ 类型的步长更新，同时加入保守因子与步长增长限制.
 
 > **Function:** **rk23**. **Adaptive IVP solver based on embedded RK formulas**
+>
 > ```Python
 > import numpy as np
 >
@@ -174,8 +176,9 @@ $$
 > print("minimum step size =", dt.min())
 > print("average step size =", dt.mean())
 > ```
+>
 > Compared to a uniform step size chosen for the most difficult region, adaptivity can reduce the number of steps dramatically.
-
+>
 > **Demo:** **Finite-time blowup**. For an IVP with finite-time blowup, the adaptively chosen steps become very small as we approach the singularity, and failure of the adaptivity can indicate where it occurs.
 >
 > ```Python

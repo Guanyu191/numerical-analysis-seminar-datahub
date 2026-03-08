@@ -61,6 +61,7 @@ $$
 这只是把 Euler 公式同步应用到每个分量上. 因为向量加法、标量乘法等运算与标量情形一一对应，**6-2-Euler-方法** 里的 `euler` 实现不需要改动就能用于系统；实际要改的只是：初值与右端函数都要用向量来编码.
 
 > **Demo:** **Solving the predator-prey system**.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -121,11 +122,13 @@ $$
 > plt.legend()
 > plt.show()
 > ```
+>
 > The Euler solution can lose accuracy quickly on this problem.
 
 当系统只有两个分量时，我们常把解画在相平面 (phase plane) 中：用 $u_1$ 与 $u_2$ 作坐标轴，把时间看作曲线参数.
 
 > **Demo:** **Predator-prey in the phase plane**.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -160,6 +163,7 @@ $$
 > plt.axis("equal")
 > plt.show()
 > ```
+>
 > In the phase plane the solution can approach a periodic one, represented by a closed loop.
 
 在本章后续内容里，我们会像在标量情形下那样陈述各种方法，但默认它们同样适用于系统. 误差分析在系统情形可能更复杂，但关于精度阶与其他性质的结论，对系统与标量都是成立的；后续给出的代码也都支持系统输入.
@@ -216,6 +220,7 @@ $$
 **#5 耦合摆的一个演示**
 
 > **Demo:** **Coupled pendulums (uncoupled vs coupled)**.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -274,4 +279,5 @@ $$
 > plt.legend()
 > plt.show()
 > ```
+>
 > With coupling activated, the pendulums can swap energy back and forth.

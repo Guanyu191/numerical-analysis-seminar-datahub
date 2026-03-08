@@ -26,8 +26,8 @@ $$
 > **Definition:** **Krylov matrix and subspace**. Given $n\times n$ matrix $\mathbf{A}$ and $n$-vector $\mathbf{u}$, the $m$th Krylov matrix is the $n\times m$ matrix $\mathbf{K}_m$. The range (i.e., column space) of this matrix is the $m$th Krylov subspace $\mathcal{K}_m$.
 >
 > In general, we expect that the dimension of the Krylov subspace $\mathcal{K}_m$, which is the rank of $\mathbf{K}_m$, equals $m$, though it may be smaller.
-
-> **Note:** "Krylov" 的常见英文发音近似 "kree-luv". 但在不同语境里也可能听到其他读法.
+>
+> **Note?** "Krylov" 的常见英文发音近似 "kree-luv". 但在不同语境里也可能听到其他读法.
 
 **#2 Krylov 子空间的基本性质**
 
@@ -35,6 +35,7 @@ Krylov 矩阵的一个吸引点是：它可以只靠重复的矩阵-向量乘法
 
 > **Theorem:** **Properties of a Krylov subspace**.
 > Suppose $\mathbf{A}$ is $n\times n$, $0<m<n$, and a vector $\mathbf{u}$ is used to generate Krylov subspaces. If $\mathbf{x}\in \mathcal{K}_m$, then the following hold:
+>
 > 1. $\mathbf{x}=\mathbf{K}_m\mathbf{z}$ for some $\mathbf{z}\in\mathbb{C}^m$.
 > 2. $\mathbf{x}\in\mathcal{K}_{m+1}$.
 > 3. $\mathbf{A}\mathbf{x}\in\mathcal{K}_{m+1}$.
@@ -146,6 +147,7 @@ $$
 这就得到 Arnoldi 迭代.
 
 > **Algorithm:** **Arnoldi iteration**. Given matrix $\mathbf{A}$ and vector $\mathbf{u}$:
+>
 > 1. Let $\mathbf{q}_1=\mathbf{u}/\|\mathbf{u}\|$.
 > 2. For $m=1,2,\dots$,
 >    a. Use $H_{im}=\mathbf{q}_i^{*}(\mathbf{A}\mathbf{q}_m)$ for $i=1,\dots,m$.
@@ -176,6 +178,7 @@ $$
 下面给出 Arnoldi 迭代的一个基础实现. 它只需要矩阵-向量乘法，因此同样可以用于稀疏矩阵.
 
 > **Function:** **arnoldi**. **Arnoldi iteration for Krylov subspaces**
+>
 > ```Python
 > import numpy as np
 >
@@ -205,7 +208,7 @@ $$
 >
 >     return Q, H
 > ```
-
+>
 > **Demo:** **Orthonormality and span check**. We verify that $Q^{*}Q\approx I$, and that the columns of $Q$ span the same space as the corresponding Krylov matrix columns.
 >
 > ```Python
@@ -223,5 +226,5 @@ $$
 > rank_QK = np.linalg.matrix_rank(np.column_stack([Q, K]))
 > print("rank([Q, K]) =", rank_QK)
 > ```
-
-> **Note:** 上面的实现对应的是逐步去投影的 Gram-Schmidt 风格 (modified Gram-Schmidt). 在精确算术下，它与更 "公式化" 的写法等价，但数值稳定性通常更好.
+>
+> **Note?** 上面的实现对应的是逐步去投影的 Gram-Schmidt 风格 (modified Gram-Schmidt). 在精确算术下，它与更 "公式化" 的写法等价，但数值稳定性通常更好.

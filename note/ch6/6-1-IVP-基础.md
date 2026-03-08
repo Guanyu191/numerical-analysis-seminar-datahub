@@ -71,6 +71,7 @@ $$
 > $$
 > u'=\sin\bigl((u+t)^2\bigr),\quad t\in[0,4],\qquad u(0)=-1.
 > $$
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -107,6 +108,7 @@ $$
 > plt.legend()
 > plt.show()
 > ```
+>
 > The solver first computes approximate values at automatically chosen times, and then uses interpolation to evaluate the solution at other times.
 
 **#4 存在性与唯一性**
@@ -120,6 +122,7 @@ $$
 这类非线性方程，解可能在有限时间内 blow up (发散到无穷大).
 
 > **Demo:** **Finite-time blowup**.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -148,6 +151,7 @@ $$
 > plt.grid(True)
 > plt.show()
 > ```
+>
 > A failure message (e.g., step size forced too small) can indicate that the solution does not exist beyond some time.
 
 我们也可以构造一个 IVP，使它有不止一个解.
@@ -173,6 +177,7 @@ $$
 数值解必然会有误差，而这些误差可以视为对解的扰动. 上面的定理给出了一个上界：$e^{L(b-a)}$ 可以作为 "解对初值扰动" 的 (逐点) 绝对条件数上界. 但这个上界可能会严重高估某个具体问题的实际敏感性.
 
 > **Demo:** **A bound can be very pessimistic**. Consider $u'=u$ and $u'=-u$. In both cases, $\partial f/\partial u=\pm 1$, so the bound from the theorem is $e^{b-a}$. But the behaviors differ.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -204,6 +209,7 @@ $$
 > plt.legend()
 > plt.show()
 > ```
+>
 > In the growing case the bound is sharp, while in the decaying case the true condition number is 1 (the maximum difference occurs at the initial time).
 
 一般来说，初值扰动可能导致解轨线相互远离、相互靠近、或围绕原轨线振荡. 我们在后面的章节才会系统讨论这些行为及其对数值方法的影响.

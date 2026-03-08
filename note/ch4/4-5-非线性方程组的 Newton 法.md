@@ -118,9 +118,10 @@ $$
 \mathbf{x}_k-\bigl[\mathbf{J}(\mathbf{x}_k)\bigr]^{-1}\mathbf{f}(\mathbf{x}_k).
 $$
 
-注意 $\bigl[\mathbf{J}(\mathbf{x}_k)\bigr]^{-1}\mathbf{f}(\mathbf{x}_k)$ 在这里扮演了一维情形 $f/f'$ 的角色 (在一维时两者确实一致). 也就是说，多维 Newton 法的每一步，都是先在当前点把非线性方程组线性化，再解一个线性方程组来得到 Newton 步. 公式虽然写成“逆矩阵乘向量”，但实际计算时我们不会显式求逆，而是直接解线性系统.
+注意 $\bigl[\mathbf{J}(\mathbf{x}_k)\bigr]^{-1}\mathbf{f}(\mathbf{x}_k)$ 在这里扮演了一维情形 $f/f'$ 的角色 (在一维时两者确实一致). 也就是说，多维 Newton 法的每一步，都是先在当前点把非线性方程组线性化，再解一个线性方程组来得到 Newton 步. 公式虽然写成 "逆矩阵乘向量" ，但实际计算时我们不会显式求逆，而是直接解线性系统.
 
 > **Algorithm:** **Multidimensional Newton's method**. Given $\mathbf{f}$ and a starting value $\mathbf{x}_1$, for each $k=1,2,3,\ldots$
+>
 > 1. Compute $\mathbf{y}_k = \mathbf{f}(\mathbf{x}_k)$ and $\mathbf{A}_k=\mathbf{f}\,'(\mathbf{x}_k)$.
 > 2. Solve the linear system $\mathbf{A}_k\mathbf{s}_k = -\mathbf{y}_k$ for the **Newton step** $\mathbf{s}_k$.
 > 3. Let $\mathbf{x}_{k+1} = \mathbf{x}_k + \mathbf{s}_k$.
@@ -144,6 +145,7 @@ $$
 下面给出方程组版 Newton 法的一个直接实现：输入残差函数和雅可比矩阵，输出整个迭代历史.
 
 > **Function:** **newtonsys**. Newton's method for a system of equations.
+>
 > ```Python
 > import numpy as np
 >
@@ -179,8 +181,9 @@ $$
 >             break
 >     return xs
 > ```
-
+>
 > **Demo:** **Quadratic convergence in a nonlinear system**.
+>
 > ```Python
 > import numpy as np
 >
@@ -210,6 +213,7 @@ $$
 > ratios = [logerr[k+1] / logerr[k] for k in range(len(logerr) - 1)]
 > print("ratios =", ratios)
 > ```
+>
 > The ratio tends to 2 when quadratic convergence is observed.
-
-> **Note:** 原文用高精度算术来获得更长的收敛序列. 在双精度浮点下，Newton 法很快就会进入舍入误差主导的区间，因此 `ratios` 在后期可能不再稳定；最后几步如果开始乱跳，通常不代表二次收敛失效，而是误差已经接近机器精度了.
+>
+> **Note?** 原文用高精度算术来获得更长的收敛序列. 在双精度浮点下，Newton 法很快就会进入舍入误差主导的区间，因此 `ratios` 在后期可能不再稳定；最后几步如果开始乱跳，通常不代表二次收敛失效，而是误差已经接近机器精度了.

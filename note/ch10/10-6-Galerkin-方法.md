@@ -275,7 +275,7 @@ $$
 >     u[1:n] = u_int
 >     return x, u
 > ```
-
+>
 > **Demo:** **Solving a BVP by finite elements**. We solve
 > $$
 > -\\bigl(x^2 u'\\bigr)' + 4u = \\sin(\\pi x),\\qquad u(0)=u(1)=0,

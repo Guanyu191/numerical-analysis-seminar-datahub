@@ -34,7 +34,7 @@ $$
 f_t+f_u f.
 $$
 
-> **Note:** 这里 $f_t$ 与 $f_u$ 是对 $\partial f/\partial t$ 与 $\partial f/\partial u$ 的简写，默认在点 $(t,\hat{u}(t))$ 处取值. 对 IVP system，$f_u$ 变为一个 **Jacobian** 矩阵，此时 $f_u f$ 表示矩阵-向量乘法.
+> **Note?** 这里 $f_t$ 与 $f_u$ 是对 $\partial f/\partial t$ 与 $\partial f/\partial u$ 的简写，默认在点 $(t,\hat{u}(t))$ 处取值. 对 IVP system，$f_u$ 变为一个 **Jacobian** 矩阵，此时 $f_u f$ 表示矩阵-向量乘法.
 
 把它代回 Taylor 展开，可写成
 
@@ -114,6 +114,7 @@ $$
 **#3 一个实现**
 
 > **Function:** **ie2**. **Improved Euler method for an IVP**
+>
 > ```Python
 > import numpy as np
 >
@@ -187,7 +188,7 @@ $$
 \end{array}
 $$
 
-> **Note:** Euler、improved Euler (IE2)、以及 modified Euler (ME2) 是三个不同的方法.
+> **Note?** Euler、improved Euler (IE2)、以及 modified Euler (ME2) 是三个不同的方法.
 
 最常用的 RK 方法是下面这个四阶方法，通常就被称作 "四阶 RK"，我们记为 RK4.
 
@@ -201,8 +202,9 @@ $$
 > u_{i+1} &= u_i+\frac{1}{6}k_1+\frac{1}{3}k_2+\frac{1}{3}k_3+\frac{1}{6}k_4.
 > \end{aligned}
 > $$
-
+>
 > **Function:** **rk4**. **Fourth-order Runge-Kutta for an IVP**
+>
 > ```Python
 > import numpy as np
 >
@@ -234,6 +236,7 @@ $$
 误差会随 $n$ 的增加呈几何下降，因此用更多 stage 换取更高精度阶往往划算. 但 stage 数越大，并不意味着精度阶可以无限增长：当 $s=5,6,7$ 时，最高精度阶是 $s-1$；当 $s=8,9$ 时，最高精度阶降为 $s-2$，等等. 在很多应用中，四阶被认为是足够且性价比很高的选择.
 
 > **Demo:** **Convergence comparison by f-evaluations**. We compare IE2 and RK4 on the IVP $u'=\sin((u+t)^2)$ over $0\le t\le 4$, $u(0)=-1$.
+>
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt
@@ -271,4 +274,5 @@ $$
 > plt.legend()
 > plt.show()
 > ```
+>
 > The fourth-order variant can be more efficient over a wide range of accuracies.

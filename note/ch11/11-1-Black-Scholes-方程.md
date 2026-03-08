@@ -73,7 +73,7 @@ Black-Scholes 方程可以通过变量替换化为更简单的典型 PDE.
 热方程是抛物型 PDE (**parabolic PDE**) 的代表模型. 扩散过程的一个关键特征是：速度与解的梯度成正比，因此解中的快速变化会很快被 "抹平".
 
 > **Observation:** Solutions of the heat equation smooth out quickly and become as flat as the boundary conditions allow.
-
+>
 > **Example:** Consider the following diffusion problem on $0\le x\le 1$:
 > $$
 > \begin{aligned}
@@ -204,7 +204,7 @@ $$
 >
 > The curves are easy to interpret if we remember that the transformed time variable means time until strike.
 >
-> > **Note:** 如果我们希望把演化过程做成动画，可以用 `matplotlib.animation` 并保存为 mp4，但通常需要系统安装 `ffmpeg`.
+> > **Note?** 如果我们希望把演化过程做成动画，可以用 `matplotlib.animation` 并保存为 mp4，但通常需要系统安装 `ffmpeg`.
 
 结果很好解释：此处的时间变量代表 "距离到期还有多久". 当我们离到期时刻很近时，期权价值应该接近收益函数 $H$. 当距离到期还有更久时，股价有更大的概率上涨，因此对固定的 $S$ 来说，期权价值会变大.
 

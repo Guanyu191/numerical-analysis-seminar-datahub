@@ -44,6 +44,7 @@
 > plt.legend()
 > plt.show()
 > ```
+>
 > The tangent line root $x_2$ is typically closer to the true root than $x_1$, so we repeat the same construction at $(x_2,f(x_2))$.
 
 **#2 Newton 迭代公式**
@@ -119,7 +120,7 @@ $$
 
 对小量 $z$ 有 $(1+z)^{-1}=1-z+O(z^2)$. 代入 $z=\frac{f''(r)}{f'(r)}\epsilon_k+O(\epsilon_k^2)$ 并只保留最低阶项，得到
 
-> **Note:** 这里用到几何级数：当 $|z|<1$ 时，
+> **Note?** 这里用到几何级数：当 $|z|<1$ 时，
 > $$
 > \frac{1}{1+z}=1-z+z^2-z^3+\cdots.
 > $$
@@ -153,7 +154,7 @@ $$
 > $$
 > for a positive constant $L$, then the sequence has quadratic convergence to the limit.
 
-线性收敛常见的经验判据是：在 log-linear 图中误差趋向一条直线. 二次收敛下，误差下降会越来越陡，因此不会出现稳定直线段. 作为一种数值检验，我们把“误差平方”改写成一个 log 比值. 由二次收敛的定义
+线性收敛常见的经验判据是：在 log-linear 图中误差趋向一条直线. 二次收敛下，误差下降会越来越陡，因此不会出现稳定直线段. 作为一种数值检验，我们把 "误差平方" 改写成一个 log 比值. 由二次收敛的定义
 
 $$
 \lim_{k\to\infty}\frac{|\epsilon_{k+1}|}{|\epsilon_k|^2}=L,\qquad (L>0)
@@ -205,9 +206,10 @@ $$
 > for q in ratios:
 >     print(q)
 > ```
+>
 > The ratios of $\log|\epsilon_{k+1}|$ to $\log|\epsilon_k|$ should trend toward 2, which is strong numerical evidence of quadratic convergence.
-
-> **Note:** 在普通双精度浮点数里，Newton 方法往往在很少几步后就把误差压到机器精度附近，此时继续迭代会很快 "停滞" 在舍入误差水平上. 因此上面的 Demo 用扩展精度来观察更多轮的渐近行为.
+>
+> **Note?** 在普通双精度浮点数里，Newton 方法往往在很少几步后就把误差压到机器精度附近，此时继续迭代会很快 "停滞" 在舍入误差水平上. 因此上面的 Demo 用扩展精度来观察更多轮的渐近行为.
 
 推导二次收敛以及上面的数值现象时，我们隐含使用了几个关键假设：
 
@@ -222,6 +224,7 @@ $$
 下面给出一个简单实现.
 
 > **Function:** **newton**. **Newton's method for a scalar rootfinding problem**
+>
 > ```Python
 > import numpy as np
 >
@@ -261,8 +264,8 @@ $$
 >
 >     return np.array(xs)
 > ```
-
-> **Note:** 当 $f'(x_k)=0$ 或非常接近 0 时，Newton 步 $\Delta x=-f(x_k)/f'(x_k)$ 就不再可靠. 这时通常要换一个初值，或者换一种方法.
+>
+> **Note?** 当 $f'(x_k)=0$ 或非常接近 0 时，Newton 步 $\Delta x=-f(x_k)/f'(x_k)$ 就不再可靠. 这时通常要换一个初值，或者换一种方法.
 
 **#6 用 Newton 方法数值计算反函数**
 
@@ -311,4 +314,5 @@ $$
 > plt.legend()
 > plt.show()
 > ```
+>
 > The inverse curve is constructed by solving $g(x)=y$ for many values of $y$.
