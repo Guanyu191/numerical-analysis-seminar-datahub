@@ -80,9 +80,7 @@ $$
 
 **#2 GMRES 的定义**
 
-> **Algorithm:** **GMRES**.
-> Given $n\times n$ matrix $\mathbf{A}$ and $n$-vector $\mathbf{b}$:
-> For $m=1,2,\dots$, let $\mathbf{x}_m=\mathbf{Q}_m\mathbf{z}_m$, where $\mathbf{z}_m$ solves
+> **Algorithm:** **GMRES**. Given $n\times n$ matrix $\mathbf{A}$ and $n$-vector $\mathbf{b}$: For $m=1,2,\dots$, let $\mathbf{x}_m=\mathbf{Q}_m\mathbf{z}_m$, where $\mathbf{z}_m$ solves
 > $$
 > \min_{\mathbf{z}\in\mathbb{C}^m}\left\|\mathbf{H}_m\mathbf{z}-\|\mathbf{b}\|_2\mathbf{e}_1\right\|_2,
 > $$
@@ -96,8 +94,7 @@ $$
 
 在精确算术下，如果 $m=n$ (更准确地说，当 Krylov 子空间最终覆盖整个空间) ，GMRES 应当得到精确解. 但实际目标通常是让 $\|\mathbf{r}_m\|_2$ 足够小，从而在某个 $m\ll n$ 时就停止.
 
-> **Demo:** **Residual curve for GMRES**.
-> We repeat the linear-system experiment from **8-4-Krylov-子空间**, but now we use an Arnoldi basis so that the residual decreases smoothly toward machine precision.
+> **Demo:** **Residual curve for GMRES**. We repeat the linear-system experiment from **8-4-Krylov-子空间**, but now we use an Arnoldi basis so that the residual decreases smoothly toward machine precision.
 >
 > ```Python
 > import numpy as np
@@ -150,8 +147,7 @@ $$
 
 下面给出一个用于演示的基础实现：它每次都做一步 Arnoldi，然后解一次小的最小二乘问题来得到新的 $\mathbf{x}_m$，并记录残差范数.
 
-> **Function:** **gmres_demo**.
-> **GMRES for a linear system (demo-only)**
+> **Function:** **gmres_demo**. **GMRES for a linear system (demo-only)**
 > ```Python
 > import numpy as np
 >
@@ -212,8 +208,7 @@ $$
 
 重启保证了每次循环的成本上界. 代价是：每次重启都会丢弃此前迭代中积累的 Krylov 子空间信息，残差最小化过程又从低维空间重新开始，从而可能显著减慢甚至导致停滞.
 
-> **Demo:** **Restarted GMRES trade-off (SciPy)**.
-> We compare unrestarted GMRES and several restart values on a sparse Poisson matrix.
+> **Demo:** **Restarted GMRES trade-off (SciPy)**. We compare unrestarted GMRES and several restart values on a sparse Poisson matrix.
 >
 > ```Python
 > import numpy as np

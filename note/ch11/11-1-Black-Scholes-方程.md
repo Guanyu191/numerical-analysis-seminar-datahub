@@ -72,11 +72,9 @@ Black-Scholes 方程可以通过变量替换化为更简单的典型 PDE.
 
 热方程是抛物型 PDE (**parabolic PDE**) 的代表模型. 扩散过程的一个关键特征是：速度与解的梯度成正比，因此解中的快速变化会很快被 "抹平".
 
-> **Observation:**
-> Solutions of the heat equation smooth out quickly and become as flat as the boundary conditions allow.
+> **Observation:** Solutions of the heat equation smooth out quickly and become as flat as the boundary conditions allow.
 
-> **Example:**
-> Consider the following diffusion problem on $0\le x\le 1$:
+> **Example:** Consider the following diffusion problem on $0\le x\le 1$:
 > $$
 > \begin{aligned}
 > \text{PDE: }& u_t = u_{xx}, && 0<x<1,\ t>0,\\
@@ -154,8 +152,7 @@ $$
 
 从而解出虚拟点 $V_{m+1,j}$，并把它代回显式格式的右端.
 
-> **Demo:** **A finite-difference solver for the Black-Scholes IBVP**.
-> We set parameters, discretize, and then march forward in (transformed) time.
+> **Demo:** **A finite-difference solver for the Black-Scholes IBVP**. We set parameters, discretize, and then march forward in (transformed) time.
 >
 > ```Python
 > import numpy as np
@@ -213,8 +210,7 @@ $$
 
 上面的 Demo 看起来一切顺利. 但问题很快会出现.
 
-> **Demo:** **The same scheme can become unstable for a longer horizon**.
-> We repeat the same computation but extend the simulation time to $T=8$.
+> **Demo:** **The same scheme can become unstable for a longer horizon**. We repeat the same computation but extend the simulation time to $T=8$.
 >
 > ```Python
 > x, t, V = solve_black_scholes_fd(T=8.0)

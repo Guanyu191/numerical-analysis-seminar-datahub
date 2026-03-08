@@ -40,8 +40,7 @@ $$
 
 **#2 向量值 IVP 的定义**
 
-> **Definition:** **Vector-valued IVP / IVP system**.
-> A vector-valued first-order initial-value problem (IVP) is
+> **Definition:** **Vector-valued IVP / IVP system**. A vector-valued first-order initial-value problem (IVP) is
 > $$
 > \mathbf{u}'(t)=\mathbf{f}\bigl(t,\mathbf{u}(t)\bigr),\quad a\le t\le b,\qquad \mathbf{u}(a)=\mathbf{u}_0,
 > $$
@@ -169,8 +168,7 @@ $$
 
 一旦我们能够求解一阶 ODE 系统，也就能求解更高阶的 ODE 系统. 原因是：我们总能把高阶问题系统地改写成更高维的一阶系统.
 
-> **Example:** **Turning a second-order IVP into a first-order system**.
-> Consider
+> **Example:** **Turning a second-order IVP into a first-order system**. Consider
 > $$
 > y''+(1+y')^3y=0,\qquad y(0)=y_0,\qquad y'(0)=0.
 > $$
@@ -182,8 +180,7 @@ $$
 
 下面给出一个来自力学的例子：两只摆通过同一根杆耦合.
 
-> **Example:** **Coupled pendulums**.
-> Two identical pendulums can be modeled as the second-order system
+> **Example:** **Coupled pendulums**. Two identical pendulums can be modeled as the second-order system
 > $$
 > \begin{aligned}
 > \theta_1''(t)+\gamma \theta_1'(t)+\frac{g}{L}\sin(\theta_1)+k(\theta_1-\theta_2) &= 0,\\

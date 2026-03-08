@@ -1,4 +1,4 @@
-# 4-3-Newton-方法 (Newton's method)
+# 4-3-Newton 方法 (Newton's method)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -8,8 +8,7 @@
 
 在求根问题里，**Newton's method** 是最核心的方法之一. 它的关键想法是：在当前近似点 $x_k$ 处用切线去近似 $f$，然后用 "切线的根" 作为新的近似 $x_{k+1}$.
 
-> **Demo:** **Tangent line approximation**.
-> Suppose we want to find a root of $f(x)=x e^x-2$. From the graph, there is a root near $x=1$, so we take $x_1=1$ as an initial guess.
+> **Demo:** **Tangent line approximation**. Suppose we want to find a root of $f(x)=x e^x-2$. From the graph, there is a root near $x=1$, so we take $x_1=1$ as an initial guess.
 >
 > ```Python
 > import numpy as np
@@ -57,8 +56,7 @@ $$
 
 求 $q(x)=0$ 是容易的，并由 $q(x_{k+1})=0$ 得到 Newton 迭代：
 
-> **Algorithm:** **Newton's method**.
-> Given a function $f$, its derivative $f'$, and an initial value $x_1$, iteratively define
+> **Algorithm:** **Newton's method**. Given a function $f$, its derivative $f'$, and an initial value $x_1$, iteratively define
 > $$
 > x_{k+1}=x_k-\frac{f(x_k)}{f'(x_k)},\qquad k=1,2,\dots.
 > $$
@@ -143,28 +141,39 @@ $$
 
 因此在渐近区间内，Newton 方法的误差会被大致平方.
 
-> **Observation:** **Error squaring in Newton's method**.
-> Asymptotically, each iteration of Newton's method roughly squares the error.
+> **Observation:** **Error squaring in Newton's method**. Asymptotically, each iteration of Newton's method roughly squares the error.
 
 **#4 二次收敛与数值判别**
 
 为了形式化刻画 "误差平方" 这件事，我们引入二次收敛.
 
-> **Definition:** **Quadratic convergence**.
-> Suppose a sequence $x_k$ approaches limit $x^*$. If the error sequence $\epsilon_k=x_k-x^*$ satisfies
+> **Definition:** **Quadratic convergence**. Suppose a sequence $x_k$ approaches limit $x^*$. If the error sequence $\epsilon_k=x_k-x^*$ satisfies
 > $$
 > \lim_{k\to\infty}\frac{|\epsilon_{k+1}|}{|\epsilon_k|^2}=L
 > $$
 > for a positive constant $L$, then the sequence has quadratic convergence to the limit.
 
-线性收敛常见的经验判据是：在 log-linear 图中误差趋向一条直线. 二次收敛下，误差下降会越来越陡，因此不会出现稳定直线段. 作为一种数值检验，注意 $|\epsilon_{k+1}|\approx K|\epsilon_k|^2$ 会推出
+线性收敛常见的经验判据是：在 log-linear 图中误差趋向一条直线. 二次收敛下，误差下降会越来越陡，因此不会出现稳定直线段. 作为一种数值检验，我们把“误差平方”改写成一个 log 比值. 由二次收敛的定义
 
 $$
-\frac{\log|\epsilon_{k+1}|}{\log|\epsilon_k|}\to 2,\qquad (k\to\infty).
+\lim_{k\to\infty}\frac{|\epsilon_{k+1}|}{|\epsilon_k|^2}=L,\qquad (L>0)
 $$
 
-> **Demo:** **Quadratic convergence in practice**.
-> We revisit $f(x)=x e^x-2$ and compute Newton iterates using extended precision so that we can observe several squaring steps beyond machine precision.
+两边取对数 (log 的底数任取)，得到
+
+$$
+\log|\epsilon_{k+1}|-2\log|\epsilon_k|
+=\log\left(\frac{|\epsilon_{k+1}|}{|\epsilon_k|^2}\right)\to \log L.
+$$
+
+把上式两边同除以 $\log|\epsilon_k|$，并注意 $\epsilon_k\to0\Rightarrow\log|\epsilon_k|\to-\infty$，于是
+
+$$
+\frac{\log|\epsilon_{k+1}|}{\log|\epsilon_k|}
+=2+\frac{\log\left(\frac{|\epsilon_{k+1}|}{|\epsilon_k|^2}\right)}{\log|\epsilon_k|}\to 2,\qquad (k\to\infty).
+$$
+
+> **Demo:** **Quadratic convergence in practice**. We revisit $f(x)=x e^x-2$ and compute Newton iterates using extended precision so that we can observe several squaring steps beyond machine precision.
 >
 > ```Python
 > import mpmath as mp
@@ -212,8 +221,7 @@ $$
 
 下面给出一个简单实现.
 
-> **Function:** **newton**.
-> **Newton's method for a scalar rootfinding problem**
+> **Function:** **newton**. **Newton's method for a scalar rootfinding problem**
 > ```Python
 > import numpy as np
 >

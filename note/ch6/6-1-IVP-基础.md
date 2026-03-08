@@ -25,8 +25,7 @@ $$
 
 **#2 一个种群模型例子**
 
-> **Example:** **Population growth and the logistic equation**.
-> Suppose $u(t)$ is the size of a population at time $t$. We idealize by allowing $u$ to take any real value. If we assume a constant per capita birth rate, then
+> **Example:** **Population growth and the logistic equation**. Suppose $u(t)$ is the size of a population at time $t$. We idealize by allowing $u$ to take any real value. If we assume a constant per capita birth rate, then
 > $$
 > \frac{du}{dt}=ku,\qquad u(0)=u_0,
 > $$
@@ -68,8 +67,7 @@ $$
 
 **#3 数值解的基本形态**
 
-> **Demo:** **Solving an IVP numerically**.
-> We solve the IVP
+> **Demo:** **Solving an IVP numerically**. We solve the IVP
 > $$
 > u'=\sin\bigl((u+t)^2\bigr),\quad t\in[0,4],\qquad u(0)=-1.
 > $$
@@ -154,8 +152,7 @@ $$
 
 我们也可以构造一个 IVP，使它有不止一个解.
 
-> **Example:** **Multiple solutions**.
-> The functions $u(t)=t^2$ and $u(t)\equiv 0$ both satisfy the differential equation $u'=2\sqrt{u}$ and the initial condition $u(0)=0$. Thus the corresponding IVP has more than one solution.
+> **Example:** **Multiple solutions**. The functions $u(t)=t^2$ and $u(t)\equiv 0$ both satisfy the differential equation $u'=2\sqrt{u}$ and the initial condition $u(0)=0$. Thus the corresponding IVP has more than one solution.
 
 下面的标准定理给出一个容易检查、并能保证唯一解存在的条件 (但它不是最一般的条件，因此也可能漏掉一些确实有唯一解的情况).
 
@@ -175,8 +172,7 @@ $$
 
 数值解必然会有误差，而这些误差可以视为对解的扰动. 上面的定理给出了一个上界：$e^{L(b-a)}$ 可以作为 "解对初值扰动" 的 (逐点) 绝对条件数上界. 但这个上界可能会严重高估某个具体问题的实际敏感性.
 
-> **Demo:** **A bound can be very pessimistic**.
-> Consider $u'=u$ and $u'=-u$. In both cases, $\partial f/\partial u=\pm 1$, so the bound from the theorem is $e^{b-a}$. But the behaviors differ.
+> **Demo:** **A bound can be very pessimistic**. Consider $u'=u$ and $u'=-u$. In both cases, $\partial f/\partial u=\pm 1$, so the bound from the theorem is $e^{b-a}$. But the behaviors differ.
 > ```Python
 > import numpy as np
 > import matplotlib.pyplot as plt

@@ -47,8 +47,7 @@ $$
 
 整理得到 Euler 方法：
 
-> **Algorithm:** **Euler's method for an IVP**.
-> Given the IVP $u'=f(t,u)$, $u(a)=u_0$, and the nodes $t_i=a+ih$, iteratively compute
+> **Algorithm:** **Euler's method for an IVP**. Given the IVP $u'=f(t,u)$, $u(a)=u_0$, and the nodes $t_i=a+ih$, iteratively compute
 > $$
 > u_{i+1}=u_i+h f(t_i,u_i),\qquad i=0,\ldots,n-1.
 > $$
@@ -56,8 +55,7 @@ $$
 
 Euler 方法按时间从左到右推进：用当前的 $u_i$ 显式算出下一步 $u_{i+1}$.
 
-> **Function:** **euler**.
-> **Euler's method for an initial-value problem**
+> **Function:** **euler**. **Euler's method for an initial-value problem**
 > ```Python
 > import numpy as np
 >
@@ -114,8 +112,7 @@ $$
 
 我们先引入更一般的一步法形式.
 
-> **Definition:** **One-step IVP method**.
-> A one-step method for the IVP $u'=f(t,u)$ is a formula of the form
+> **Definition:** **One-step IVP method**. A one-step method for the IVP $u'=f(t,u)$ is a formula of the form
 > $$
 > u_{i+1}=u_i+h\,\phi(t_i,u_i,h),\qquad i=0,\ldots,n-1.
 > $$
@@ -124,8 +121,7 @@ Euler 方法就是其中的特例：$\phi(t,u,h)=f(t,u)$.
 
 与 **5-5-有限差分的收敛性** 类似，我们把截断误差定义为：把精确解代回一步公式后得到的残差 (并按步长做归一化).
 
-> **Definition:** **Truncation error of a one-step IVP method**.
-> The local truncation error (LTE) of the one-step method is
+> **Definition:** **Truncation error of a one-step IVP method**. The local truncation error (LTE) of the one-step method is
 > $$
 > \tau_{i+1}(h):=\frac{\hat{u}(t_{i+1})-\hat{u}(t_i)}{h}-\phi\bigl(t_i,\hat{u}(t_i),h\bigr).
 > $$
@@ -173,15 +169,13 @@ $$
 
 这个定理也支撑了下面的精度阶定义.
 
-> **Definition:** **Order of accuracy of a one-step IVP method**.
-> If the local truncation error satisfies $\tau_{i+1}(h)=O(h^p)$ for a positive integer $p$, then $p$ is the order of accuracy of the formula.
+> **Definition:** **Order of accuracy of a one-step IVP method**. If the local truncation error satisfies $\tau_{i+1}(h)=O(h^p)$ for a positive integer $p$, then $p$ is the order of accuracy of the formula.
 
 我们可以把上面的定理理解为：在常见假设下，全局误差与 LTE 具有相同的精度阶. 但要注意：$O(h^p)$ 里隐藏的常数会随时间指数增长. 当时间区间固定 (例如 $b-a$ 有界) 时，这不会破坏结论；但如果我们把时间推进到非常长的区间，则没有同样的保证.
 
 **#6 一个收敛性实验**
 
-> **Demo:** **Convergence of Euler's method**.
-> We consider the IVP
+> **Demo:** **Convergence of Euler's method**. We consider the IVP
 > $$
 > u'=\sin\bigl((u+t)^2\bigr),\quad 0\le t\le 4,\qquad u(0)=-1.
 > $$

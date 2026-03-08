@@ -6,11 +6,11 @@
 
 **#1 为什么需要 quasi-Newton**
 
-Newton 法是求解方程与最优化问题的基础方法，但它的 "纯" 形式并不理想. 最主要的两个问题是：计算 Jacobian 矩阵 (雅可比矩阵) 既麻烦又昂贵，而且从许多初始点出发时迭代会发散. **quasi-Newton methods** (拟 Newton 方法) 会在不改变基本思路的前提下，对 Newton 法做一些改造来缓解这些问题.
+Newton 法是求解方程与最优化问题的基础方法，但它的原始形式并不理想. 最主要的两个问题是：计算 Jacobian 矩阵 (雅可比矩阵) 既麻烦又昂贵，而且从许多初始点出发时迭代会发散. **Quasi-Newton methods** (拟 Newton 方法) 会在不改变基本思路的前提下，对 Newton 法做一些改造来缓解这些问题.
 
 **#2 用有限差分近似 Jacobian**
 
-在一维情形，我们已经见过一个替代 "直接算导数" 的办法. 事后回看，可以把割线法理解为：把 Newton 公式中的 $f'(x_k)$ 换成差商
+在一维情形，我们已经见过一个替代“直接算导数”的办法. 我们可以把割线法理解为：把 Newton 公式中的 $f'(x_k)$ 换成差商
 
 $$
 f'(x_k)\approx \frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.
@@ -40,10 +40,9 @@ $$
 \quad j=1,\ldots,n.
 $$
 
-关于步长 $\delta$ 的选取，在第 5 章会给出解释：通常把 $\delta$ 选在 $\sqrt{\epsilon}$ 的量级，其中 $\epsilon$ 表示对 $\mathbf{f}$ 的评估中预期的噪声或不确定性. 如果噪声唯一来源是浮点舍入误差，那么可以用 $\delta\approx \sqrt{\epsilon_{\rm mach}}$.
+关于步长 $\delta$ 的选取，在第 5 章会给出解释：通常把 $\delta$ 选在 $\sqrt{\epsilon}$ 的量级，其中 $\epsilon$ 表示计算 $\mathbf{f}$ 的数值中的噪声或不确定性. 如果噪声唯一来源是浮点舍入误差，那么可以用 $\delta\approx \sqrt{\epsilon_{\rm mach}}$.
 
-> **Function:** **fdjac**.
-> **Finite-difference approximation of a Jacobian**
+> **Function:** **fdjac**. **Finite-difference approximation of a Jacobian**
 > ```Python
 > import numpy as np
 >
@@ -78,7 +77,7 @@ $$
 
 **#3 Broyden 更新**
 
-有限差分 Jacobian 很容易实现，但从上面的公式可以看出：每次迭代都要额外评估 $\mathbf{f}$ 共 $n$ 次 (每一列一次). 在某些应用里，这会慢到无法接受. 更糟的是，随着迭代逐渐收敛，根的近似值变化不大，Jacobian 矩阵也应当变化不大；此时重复做这些函数评估就显得浪费. 这正好用得上我们在 **4-4-基于插值的方法** 里提到的 principle of approximate approximation：既然最终只需要近似，那就允许我们用上一轮的信息来近似 Jacobian.
+有限差分 Jacobian 很容易实现，但从上面的公式可以看出：每次迭代都要额外计算 $\mathbf{f}$ 的数值共 $n$ 次 (每列算一次). 在某些应用里，这会慢到无法接受. 更糟的是，随着迭代逐渐收敛，根的近似值变化不大，Jacobian 矩阵也应当变化不大；此时重复计算就比较浪费. 这正好用得上我们在 **4-4-基于插值的方法** 里提到的 principle of approximate approximation：既然最终只需要近似，那就允许我们用上一轮的信息来近似 Jacobian.
 
 回忆 Newton 迭代来自线性模型
 
@@ -93,10 +92,10 @@ $$
 令 Newton 步 $\mathbf{s}_k=\mathbf{x}_{k+1}-\mathbf{x}_k$，令 $\mathbf{y}_k=\mathbf{f}(\mathbf{x}_k)$. 现在我们用一个矩阵 $\mathbf{A}_k$ 来近似 Jacobian，那么 $\mathbf{s}_k$ 由下面的线性系统定义：
 
 $$
-\mathbf{A}_k\mathbf{s}_k=-\mathbf{y}_k.
+\mathbf{A}_k\mathbf{s}_k=-\mathbf{y}_k,
 $$
 
-得到 $\mathbf{x}_{k+1}$ 后，我们希望把 $\mathbf{A}_k$ 更新为 $\mathbf{A}_{k+1}$. 一维割线法会假设导数满足差商关系；在向量情形中，更自然的改写方式是
+解得 $\mathbf{s}_k$ 后，便有 $\mathbf{x}_{k+1} = \mathbf{x}_k + \mathbf{s}_k$，此时我们希望把 $\mathbf{A}_k$ 更新为 $\mathbf{A}_{k+1}$. 一维割线法会假设导数满足差商关系；在向量情形中，更自然的改写方式是
 
 $$
 \mathbf{y}_{k+1}-\mathbf{y}_k
@@ -136,8 +135,7 @@ $$
 -\mathbf{A}_k^{T}\mathbf{y}_k.
 $$
 
-> **Algorithm:** **Levenberg's method**.
-> Given $\mathbf{f}$, a starting value $\mathbf{x}_1$, and a scalar $\lambda$, for each $k=1,2,3,\ldots$
+> **Algorithm:** **Levenberg's method**. Given $\mathbf{f}$, a starting value $\mathbf{x}_1$, and a scalar $\lambda$, for each $k=1,2,3,\ldots$
 > 1. Compute $\mathbf{y}_k=\mathbf{f}(\mathbf{x}_k)$, and let $\mathbf{A}_k$ be an exact or approximate Jacobian matrix.
 > 2. Solve $\bigl(\mathbf{A}_k^{T}\mathbf{A}_k+\lambda \mathbf{I}\bigr)\mathbf{s}_k=-\mathbf{A}_k^{T}\mathbf{y}_k$ for $\mathbf{s}_k$.
 > 3. Let $\hat{\mathbf{x}}=\mathbf{x}_k+\mathbf{s}_k$.
@@ -188,8 +186,7 @@ $$
 
 每次循环会先用上面的 Levenberg 线性系统提出一个步长 $\mathbf{s}_k$. 然后检查使用该步长是否会使 $\|\mathbf{f}\|_2$ 下降：如果下降，就接受新点，降低 $\lambda$ 以更接近 Newton 行为，并用 Broyden 公式廉价更新 Jacobian；如果不下降，就增大 $\lambda$ 以更接近梯度下降，并在必要时用有限差分重新计算 Jacobian.
 
-> **Function:** **levenberg**.
-> **Quasi-Newton method for nonlinear systems**
+> **Function:** **levenberg**. **Quasi-Newton method for nonlinear systems**
 > ```Python
 > import numpy as np
 >

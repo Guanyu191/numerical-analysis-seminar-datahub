@@ -8,8 +8,7 @@
 
 当变量与方程都变成多维时，求根问题会困难得多.
 
-> **Definition:** **Multidimensional rootfinding problem**.
-> Given a continuous vector-valued function $\mathbf{f}$ mapping from $\mathbb{R}^n$ into $\mathbb{R}^n$, find a vector $\mathbf{r}$ such that
+> **Definition:** **Multidimensional rootfinding problem**. Given a continuous vector-valued function $\mathbf{f}$ mapping from $\mathbb{R}^n$ into $\mathbb{R}^n$, find a vector $\mathbf{r}$ such that
 > $$
 > \begin{aligned}
 > f_1(r_1,\dots,r_n) &= 0,\\
@@ -21,8 +20,7 @@
 
 具体问题常常用标量变量和标量方程来描述，但写成上面的向量形式会更统一.
 
-> **Example:**
-> The steady state of interactions between the population $w(t)$ of a predator species and the population $h(t)$ of a prey species might be modeled as
+> **Example:** The steady state of interactions between the population $w(t)$ of a predator species and the population $h(t)$ of a prey species might be modeled as
 > $$
 > \begin{aligned}
 > ah - b h w &= 0,\\
@@ -33,7 +31,7 @@
 
 上面这个例子可以手算解出来，但在实际问题里，哪怕只是证明解的存在性与唯一性，通常都很难.
 
-**#2 线性模型与 Jacobian (雅可比矩阵)**
+**#2 线性模型与 Jacobian matrix (雅可比矩阵)**
 
 把求根方法推广到方程组时，我们仍然沿用同一条基本思路：构造一个容易处理的模型来近似原函数. 起点依然是线性模型. 我们从多元 Taylor 展开出发：
 
@@ -58,10 +56,9 @@ $$
 \left[\frac{\partial f_i}{\partial x_j}\right]_{\,i,j=1,\ldots,n}.
 $$
 
-由于 Jacobian 在 Taylor 公式里扮演的角色，我们也会把 $\mathbf{J}(\mathbf{x})$ 记作 $\mathbf{f}\,'(\mathbf{x})$. 和其他导数一样，它也是 $\mathbf{x}$ 的函数.
+由于 Jacobian matrix (雅可比矩阵) 在 Taylor 公式里扮演的角色，我们也会把 $\mathbf{J}(\mathbf{x})$ 记作 $\mathbf{f}\,'(\mathbf{x})$. 也就是说，在多元情形里，它就像一维里的导数一样，负责给出局部线性近似. 和其他导数一样，它也是关于 $\mathbf{x}$ 的函数.
 
-> **Example:**
-> Let
+> **Example:** Let
 > $$
 > \begin{aligned}
 > f_1(x_1,x_2,x_3) &= -x_1\cos(x_2) - 1,\\
@@ -121,22 +118,32 @@ $$
 \mathbf{x}_k-\bigl[\mathbf{J}(\mathbf{x}_k)\bigr]^{-1}\mathbf{f}(\mathbf{x}_k).
 $$
 
-注意 $\mathbf{J}^{-1}\mathbf{f}$ 在这里扮演了一维情形 $f/f'$ 的角色 (在一维时两者确实一致). 但在数值计算中，我们不会去算矩阵逆，而是解线性系统.
+注意 $\bigl[\mathbf{J}(\mathbf{x}_k)\bigr]^{-1}\mathbf{f}(\mathbf{x}_k)$ 在这里扮演了一维情形 $f/f'$ 的角色 (在一维时两者确实一致). 也就是说，多维 Newton 法的每一步，都是先在当前点把非线性方程组线性化，再解一个线性方程组来得到 Newton 步. 公式虽然写成“逆矩阵乘向量”，但实际计算时我们不会显式求逆，而是直接解线性系统.
 
-> **Algorithm:** **Multidimensional Newton's method**.
-> Given $\mathbf{f}$ and a starting value $\mathbf{x}_1$, for each $k=1,2,3,\ldots$
+> **Algorithm:** **Multidimensional Newton's method**. Given $\mathbf{f}$ and a starting value $\mathbf{x}_1$, for each $k=1,2,3,\ldots$
 > 1. Compute $\mathbf{y}_k = \mathbf{f}(\mathbf{x}_k)$ and $\mathbf{A}_k=\mathbf{f}\,'(\mathbf{x}_k)$.
 > 2. Solve the linear system $\mathbf{A}_k\mathbf{s}_k = -\mathbf{y}_k$ for the **Newton step** $\mathbf{s}_k$.
 > 3. Let $\mathbf{x}_{k+1} = \mathbf{x}_k + \mathbf{s}_k$.
 
-把一维 Newton 法的级数分析推广到向量情形，可以得到：在合适条件下，如果迭代真的收敛，那么它在任意向量范数下也具有二次收敛.
+把一维 Newton 法的误差分析推广到向量情形，可以得到：在合适条件下，如果迭代真的收敛，那么它在任意向量范数下也具有二次收敛. 也就是说，如果记误差为 $\epsilon_k=\|\mathbf{x}_k-\mathbf{r}\|$，那么渐近地仍会有
+
+$$
+\epsilon_{k+1}\approx C\epsilon_k^2.
+$$
+
+因此和一维情形一样，我们仍然可以用
+
+$$
+\frac{\log \epsilon_{k+1}}{\log \epsilon_k}\to 2
+$$
+
+来做一个经验上的收敛阶判别.
 
 **#4 实现与一个收敛性实验**
 
-下面给出 Newton 方程组版本的一个直接实现：输入残差函数与 Jacobian，输出整个迭代历史.
+下面给出方程组版 Newton 法的一个直接实现：输入残差函数和雅可比矩阵，输出整个迭代历史.
 
-> **Function:** **newtonsys**.
-> **Newton's method for a system of equations**
+> **Function:** **newtonsys**. Newton's method for a system of equations.
 > ```Python
 > import numpy as np
 >
@@ -205,4 +212,4 @@ $$
 > ```
 > The ratio tends to 2 when quadratic convergence is observed.
 
-> **Note:** 原文用高精度算术来获得更长的收敛序列. 在双精度浮点下，Newton 法很快就会进入舍入误差主导的区间，因此 `ratios` 在后期可能不再稳定.
+> **Note:** 原文用高精度算术来获得更长的收敛序列. 在双精度浮点下，Newton 法很快就会进入舍入误差主导的区间，因此 `ratios` 在后期可能不再稳定；最后几步如果开始乱跳，通常不代表二次收敛失效，而是误差已经接近机器精度了.

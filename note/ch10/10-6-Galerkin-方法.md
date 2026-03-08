@@ -51,8 +51,7 @@ $$
 
 这被称为原微分方程的弱形式 (**weak form**).
 
-> **Definition:** **Weak solution**.
-> If $u(x)$ is a function such that the weak form is satisfied for all valid choices of $\psi$, we say that $u$ is a weak solution of the BVP.
+> **Definition:** **Weak solution**. If $u(x)$ is a function such that the weak form is satisfied for all valid choices of $\psi$, we say that $u$ is a weak solution of the BVP.
 
 任何满足原微分方程的解 (可以称为强形式 **strong form**) 都是弱解，但反过来不一定成立. 虽然弱形式看起来更绕，但在很多数学模型里，它反而更基础.
 
@@ -113,8 +112,7 @@ $$
 
 **#4 一个三角基函数的例子**
 
-> **Example:**
-> Suppose we are given $-u'' + 4u = x$ with $u(0)=u(\pi)=0$. We could choose the basis functions $\phi_k(x)=\\sin(kx)$ for $k=1,2,3$. Then
+> **Example:** Suppose we are given $-u'' + 4u = x$ with $u(0)=u(\pi)=0$. We could choose the basis functions $\phi_k(x)=\\sin(kx)$ for $k=1,2,3$. Then
 > $$
 > M_{ij}=4\\int_0^{\\pi}\\sin(ix)\\sin(jx)\\,dx,
 > \\qquad
@@ -226,8 +224,7 @@ $$
 
 这些就是下面代码里 `Ke`、`Me`、`fe` 的来源.
 
-> **Demo:** **Piecewise linear FEM for a linear BVP**.
-> We implement the piecewise linear FEM for the weak form and assemble the global system from local contributions.
+> **Demo:** **Piecewise linear FEM for a linear BVP**. We implement the piecewise linear FEM for the weak form and assemble the global system from local contributions.
 >
 > ```Python
 > import numpy as np
@@ -279,8 +276,7 @@ $$
 >     return x, u
 > ```
 
-> **Demo:** **Solving a BVP by finite elements**.
-> We solve
+> **Demo:** **Solving a BVP by finite elements**. We solve
 > $$
 > -\\bigl(x^2 u'\\bigr)' + 4u = \\sin(\\pi x),\\qquad u(0)=u(1)=0,
 > $$

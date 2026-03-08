@@ -20,8 +20,7 @@ $$
 
 这引出了我们的第三类典型 PDE：Laplace 方程，以及更一般的 Poisson 方程. 二维 Poisson 方程写作
 
-> **Definition:** **Laplace and Poisson equations**.
-> The two-dimensional Poisson equation is
+> **Definition:** **Laplace and Poisson equations**. The two-dimensional Poisson equation is
 > $$
 > u_{xx}+u_{yy}=f(x,y).
 > $$
@@ -51,8 +50,7 @@ $$
 
 **#3 Kronecker 积**
 
-> **Definition:** **Kronecker product**.
-> Let $\mathbf{A}$ be $m\times n$ and $\mathbf{B}$ be $p\times q$. The Kronecker product $\mathbf{A}\otimes\mathbf{B}$ is the $mp\times nq$ matrix given by
+> **Definition:** **Kronecker product**. Let $\mathbf{A}$ be $m\times n$ and $\mathbf{B}$ be $p\times q$. The Kronecker product $\mathbf{A}\otimes\mathbf{B}$ is the $mp\times nq$ matrix given by
 > $$
 > \mathbf{A}\otimes\mathbf{B}
 > =
@@ -202,8 +200,7 @@ $$
 
 **#7 一个通用实现：poissonfd**
 
-> **Function:** **poissonfd**.
-> **Solve Poisson's equation on a rectangle by finite differences**
+> **Function:** **poissonfd**. **Solve Poisson's equation on a rectangle by finite differences**
 > ```Python
 > import numpy as np
 > import scipy.sparse as sp
@@ -273,8 +270,7 @@ $$
 
 **#8 Demo：先选解再构造 forcing**
 
-> **Demo:** **A manufactured solution for Poisson's equation**.
-> We choose an exact solution first and derive the forcing term.
+> **Demo:** **A manufactured solution for Poisson's equation**. We choose an exact solution first and derive the forcing term.
 >
 > ```Python
 > import numpy as np

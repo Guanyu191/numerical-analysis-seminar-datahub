@@ -23,9 +23,7 @@ $$
 \end{bmatrix}.
 $$
 
-> **Definition:** **Krylov matrix and subspace**.
-> Given $n\times n$ matrix $\mathbf{A}$ and $n$-vector $\mathbf{u}$, the $m$th Krylov matrix is the $n\times m$ matrix $\mathbf{K}_m$.
-> The range (i.e., column space) of this matrix is the $m$th Krylov subspace $\mathcal{K}_m$.
+> **Definition:** **Krylov matrix and subspace**. Given $n\times n$ matrix $\mathbf{A}$ and $n$-vector $\mathbf{u}$, the $m$th Krylov matrix is the $n\times m$ matrix $\mathbf{K}_m$. The range (i.e., column space) of this matrix is the $m$th Krylov subspace $\mathcal{K}_m$.
 >
 > In general, we expect that the dimension of the Krylov subspace $\mathcal{K}_m$, which is the rank of $\mathbf{K}_m$, equals $m$, though it may be smaller.
 
@@ -64,8 +62,7 @@ $$
 
 在这个问题里，一个自然的种子向量就是 $\mathbf{b}$.
 
-> **Demo:** **Least-squares over a Krylov subspace can stagnate**.
-> We build $\mathbf{K}_m$ from a seed vector $\mathbf{b}$, solve the reduced least-squares problems, and observe that convergence can stagnate due to ill-conditioning of the Krylov basis.
+> **Demo:** **Least-squares over a Krylov subspace can stagnate**. We build $\mathbf{K}_m$ from a seed vector $\mathbf{b}$, solve the reduced least-squares problems, and observe that convergence can stagnate due to ill-conditioning of the Krylov basis.
 >
 > ```Python
 > import numpy as np
@@ -148,8 +145,7 @@ $$
 
 这就得到 Arnoldi 迭代.
 
-> **Algorithm:** **Arnoldi iteration**.
-> Given matrix $\mathbf{A}$ and vector $\mathbf{u}$:
+> **Algorithm:** **Arnoldi iteration**. Given matrix $\mathbf{A}$ and vector $\mathbf{u}$:
 > 1. Let $\mathbf{q}_1=\mathbf{u}/\|\mathbf{u}\|$.
 > 2. For $m=1,2,\dots$,
 >    a. Use $H_{im}=\mathbf{q}_i^{*}(\mathbf{A}\mathbf{q}_m)$ for $i=1,\dots,m$.
@@ -171,8 +167,7 @@ $$
 
 其中 $\mathbf{H}_m$ 是一个 $(m+1)\times m$ 的 "上三角加一条次对角线" 的矩阵.
 
-> **Definition:** **Upper Hessenberg matrix**.
-> A matrix $\mathbf{H}$ is upper Hessenberg if $H_{ij}=0$ whenever $i>j+1$.
+> **Definition:** **Upper Hessenberg matrix**. A matrix $\mathbf{H}$ is upper Hessenberg if $H_{ij}=0$ whenever $i>j+1$.
 
 上面的恒等式是 Krylov 子空间方法中的基本恒等式.
 
@@ -180,8 +175,7 @@ $$
 
 下面给出 Arnoldi 迭代的一个基础实现. 它只需要矩阵-向量乘法，因此同样可以用于稀疏矩阵.
 
-> **Function:** **arnoldi**.
-> **Arnoldi iteration for Krylov subspaces**
+> **Function:** **arnoldi**. **Arnoldi iteration for Krylov subspaces**
 > ```Python
 > import numpy as np
 >
@@ -212,8 +206,7 @@ $$
 >     return Q, H
 > ```
 
-> **Demo:** **Orthonormality and span check**.
-> We verify that $Q^{*}Q\approx I$, and that the columns of $Q$ span the same space as the corresponding Krylov matrix columns.
+> **Demo:** **Orthonormality and span check**. We verify that $Q^{*}Q\approx I$, and that the columns of $Q$ span the same space as the corresponding Krylov matrix columns.
 >
 > ```Python
 > import numpy as np
