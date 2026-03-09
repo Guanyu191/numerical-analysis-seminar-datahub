@@ -2,60 +2,60 @@
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
-> 这份笔记主要是翻译了原文内容，并删改或重新表述部分内容，希望能进一步减少初学者的学习障碍.
+> **Note:** 这份笔记主要是翻译了原文内容，并删改或重新表述部分内容，希望能进一步减少初学者的学习障碍.
 
 **#1 为什么需要自适应步长**
 
-初值问题方法的推导与分析通常假设固定步长 $h$. 虽然 **6-2-Euler 方法** 的误差定理保证了当 $h\to 0$ 时误差具有 $O(h^p)$ 的行为，但这个界里包含不可知的常数，因此并不能直接告诉我们在某个具体步长下误差大约是多少.
+初值问题方法的推导与分析通常假设固定步长 $h$. 虽然 **6-2-Euler 方法** 的误差定理保证了当 $h \to 0$ 时误差具有 $O(h^p)$ 的行为，但这个界里包含不可知的常数，因此并不能直接告诉我们在某个具体步长下误差大约是多少.
 
-更重要的是，固定步长在很多问题里并不高效：就像 **5-7-自适应积分** 一样，理想策略往往是 "哪里变化快就用小步，哪里变化慢就用大步". 对 IVP 来说，难点在于右端项 $f(t,u)$ 依赖于解本身，因此细节与积分问题有很大不同.
+更重要的是，固定步长在很多问题里并不高效: 就像 **5-7-自适应积分** 一样，理想策略往往是 "哪里变化快就用小步，哪里变化慢就用大步". 对 IVP 来说，难点在于右端项 $f(t, u)$ 依赖于解本身，因此细节与积分问题有很大不同.
 
-**#2 步长预测：用两种阶的 RK 同时估计误差**
+**#2 步长预测: 用两种阶的 RK 同时估计误差**
 
-设我们在同一个时间步上，同时运行两种不同阶的 RK 方法：一个阶为 $p$，得到 $u_{i+1}$；另一个阶为 $p+1$，得到 $\tilde u_{i+1}$. 在大多数情况下，$\tilde u_{i+1}$ 会显著更准确，因此可以用两者差值来估计低阶方法的局部误差：
+设我们在同一个时间步上，同时运行两种不同阶的 RK 方法: 一个阶为 $p$，得到 $u_{i+1}$；另一个阶为 $p + 1$，得到 $\tilde u_{i+1}$. 在大多数情况下，$\tilde u_{i+1}$ 会显著更准确，因此可以用两者差值来估计低阶方法的局部误差:
 
 $$
-E_i(h)=|\tilde u_{i+1}-u_{i+1}|.
+E_i(h) = |\tilde u_{i+1} - u_{i+1}|.
 $$
 
 对向量 IVP 则用范数替代绝对值.
 
-接下来问一个 "回看" 问题：如果我们希望误差目标是 $\epsilon$，那刚才应该用多大的步长？假设局部截断误差满足 $E_i(h)\approx C h^{p+1}$，那么对 $qh$ 有
+接下来问一个 "回看" 问题: 如果我们希望误差目标是 $\epsilon$，那刚才应该用多大的步长？假设局部截断误差满足 $E_i(h) \approx C h^{p+1}$，那么对 $qh$ 有
 
 $$
-E_i(qh)\approx q^{p+1}E_i(h).
+E_i(qh) \approx q^{p+1} E_i(h).
 $$
 
-把它与目标 $E_i(qh)\approx \epsilon$ 匹配，得到经典的步长因子预测：
+把它与目标 $E_i(qh) \approx \epsilon$ 匹配，得到经典的步长因子预测:
 
 $$
-q\approx \left(\frac{\epsilon}{E_i(h)}\right)^{1/(p+1)}.
+q \approx \left(\frac{\epsilon}{E_i(h)}\right)^{1/(p + 1)}.
 $$
 
 有些观点认为，应该控制更接近全局误差的量 $E_i(h)/h$，则会导向
 
 $$
-q\le \left(\frac{\epsilon}{E_i(h)}\right)^{1/p}.
+q \le \left(\frac{\epsilon}{E_i(h)}\right)^{1/p}.
 $$
 
-两种选择各有拥护者；实际经验中，前一种 (基于 $1/(p+1)$ ) 更常被采用.
+两种选择各有拥护者；实际经验中，前一种 (基于 $1 / (p + 1)$ ) 更常被采用.
 
 **#3 自适应步长算法框架**
 
-> **Algorithm:** **Adaptive step size for an IVP**. Given a solution estimate $u_i$ at $t=t_i$ and a step size $h$:
+> **Algorithm:** **Adaptive step size for an IVP**. Given a solution estimate $u_i$ at $t = t_i$ and a step size $h$:
 >
 > 1. Produce estimates $u_{i+1}$ and $\tilde u_{i+1}$, and estimate the error.
-> 2. If the error is small enough, adopt $\tilde u_{i+1}$ as the solution value at $t=t_i+h$, then increment $i$.
+> 2. If the error is small enough, adopt $\tilde u_{i+1}$ as the solution value at $t = t_i + h$, then increment $i$.
 > 3. Replace $h$ by $qh$, with $q$ given by a step size prediction rule.
-> 4. Repeat until $t=b$.
+> 4. Repeat until $t = b$.
 
-这只是框架，还需要明确：怎么用最小成本得到一对不同阶的结果 (Step 1)，以及如何定义 "误差足够小" 与如何避免步长失控.
+这只是框架，还需要明确: 怎么用最小成本得到一对不同阶的结果 (Step 1)，以及如何定义 "误差足够小" 与如何避免步长失控.
 
-**#4 Embedded Runge-Kutta：共享 stages 的两套公式**
+**#4 Embedded Runge-Kutta: 共享 stages 的两套公式**
 
-如果我们真的分别运行两种 RK 方法来得到 $u_{i+1}$ 与 $\tilde u_{i+1}$，那么每个时间步要做的 $f(t,u)$ 函数值计算次数会显著增加. 为了降低自适应的边际成本，我们使用 embedded RK formulas：两套不同阶的公式共享同一批内部 stages，只是用不同的线性组合得到不同阶的输出.
+如果我们真的分别运行两种 RK 方法来得到 $u_{i+1}$ 与 $\tilde u_{i+1}$，那么每个时间步要做的 $f(t, u)$ 函数值计算次数会显著增加. 为了降低自适应的边际成本，我们使用 embedded RK formulas: 两套不同阶的公式共享同一批内部 stages，只是用不同的线性组合得到不同阶的输出.
 
-一个常用的嵌入对是 Bogacki–Shampine (BS23)：
+一个常用的嵌入对是 Bogacki–Shampine (BS23):
 
 $$
 \begin{array}{c|cccc}
@@ -71,15 +71,15 @@ $$
 \end{array}
 $$
 
-表的上半部分给出 4 个 stages. 最后两行给出两种不同的加权组合：一行产生三阶近似，另一行产生二阶近似；两者差值就提供误差估计.
+表的上半部分给出 4 个 stages. 最后两行给出两种不同的加权组合: 一行产生三阶近似，另一行产生二阶近似；两者差值就提供误差估计.
 
 **#5 一个实现: rk23**
 
-下面给出一个 embedded 二/三阶自适应求解器 `rk23`. 它采用 BS23 公式对，并使用 $q=(\epsilon/E)^{1/3}$ 类型的步长更新，同时加入保守因子与步长增长限制.
+下面给出一个 embedded 二/三阶自适应求解器 `rk23`. 它采用 BS23 公式对，并使用 $q = (\epsilon / E)^{1/3}$ 类型的步长更新，同时加入保守因子与步长增长限制.
 
 > **Function:** **rk23**. **Adaptive IVP solver based on embedded RK formulas**
 >
-> ```Python
+> ```python
 > import numpy as np
 >
 > def rk23(f, tspan, u0, tol, maxiter=10_000):
@@ -147,11 +147,11 @@ $$
 >     return np.array(t, dtype=float), np.array(u, dtype=float)
 > ```
 
-**#6 Demo：自适应步长如何响应解的特征**
+**#6 Demo: 自适应步长如何响应解的特征**
 
-> **Demo:** **Adaptive IVP solution**. The solution of $u' = e^{t-u\\sin u}$ changes abruptly near $t\\approx 2.4$, and adaptive step sizes vary over orders of magnitude.
+> **Demo:** **Adaptive IVP solution**. The solution of $u' = e^{t - u \sin u}$ changes abruptly near $t \approx 2.4$, and adaptive step sizes vary over orders of magnitude.
 >
-> ```Python
+> ```python
 > import numpy as np
 > import matplotlib.pyplot as plt
 >
@@ -181,7 +181,7 @@ $$
 >
 > **Demo:** **Finite-time blowup**. For an IVP with finite-time blowup, the adaptively chosen steps become very small as we approach the singularity, and failure of the adaptivity can indicate where it occurs.
 >
-> ```Python
+> ```python
 > import numpy as np
 > import matplotlib.pyplot as plt
 >
@@ -196,4 +196,4 @@ $$
 > plt.show()
 > ```
 
-有些问题里，自适应步长会清晰对应到解的某些可见特征 (例如快速跃迁、接近 blowup). 但也存在所谓 stiff problems：时间步看起来 "不合理地小"，却并不能从解的可见变化直接解释. 这类问题需要不同类型的求解器，在后续章节会继续讨论.
+有些问题里，自适应步长会清晰对应到解的某些可见特征 (例如快速跃迁、接近 blowup). 但也存在所谓 stiff problems: 时间步看起来 "不合理地小"，却并不能从解的可见变化直接解释. 这类问题需要不同类型的求解器，在后续章节会继续讨论.

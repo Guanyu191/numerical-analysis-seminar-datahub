@@ -2,7 +2,7 @@
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
-> 这份笔记主要是翻译了原文内容，并删改或重新表述部分内容，希望能进一步减少初学者的学习障碍.
+> **Note:** 这份笔记主要是翻译了原文内容，并删改或重新表述部分内容，希望能进一步减少初学者的学习障碍.
 
 **#1 为什么需要 IVP systems**
 
@@ -13,8 +13,8 @@
 > **Example:** **A predator-prey model**.
 > $$
 > \begin{aligned}
-> \frac{dy}{dt} &= y(1-\alpha y)-\frac{yz}{1+\beta y},\\[2mm]
-> \frac{dz}{dt} &= -z+\frac{yz}{1+\beta y},
+> \frac{dy}{dt} &= y(1 - \alpha y) - \frac{yz}{1 + \beta y},\\[2mm]
+> \frac{dz}{dt} &= -z + \frac{yz}{1 + \beta y},
 > \end{aligned}
 > $$
 > where $\alpha$ and $\beta$ are positive constants.
@@ -24,7 +24,7 @@
 为了把系统写得更统一，我们可以把两个因变量打包成一个向量值函数
 
 $$
-\mathbf{u}(t)=
+\mathbf{u}(t) =
 \begin{bmatrix}
 u_1(t)\\
 u_2(t)
@@ -36,17 +36,17 @@ z(t)
 \end{bmatrix}.
 $$
 
-对应的方程组可以写成分量形式 $u_1'(t)=f_1(t,\mathbf{u})$、$u_2'(t)=f_2(t,\mathbf{u})$，从而把系统视为一个向量值微分方程.
+对应的方程组可以写成分量形式 $u_1'(t) = f_1(t, \mathbf{u})$、$u_2'(t) = f_2(t, \mathbf{u})$，从而把系统视为一个向量值微分方程.
 
 **#2 向量值 IVP 的定义**
 
 > **Definition:** **Vector-valued IVP / IVP system**. A vector-valued first-order initial-value problem (IVP) is
 > $$
-> \mathbf{u}'(t)=\mathbf{f}\bigl(t,\mathbf{u}(t)\bigr),\quad a\le t\le b,\qquad \mathbf{u}(a)=\mathbf{u}_0,
+> \mathbf{u}'(t) = \mathbf{f}\bigl(t, \mathbf{u}(t)\bigr),\quad a \le t \le b,\qquad \mathbf{u}(a) = \mathbf{u}_0,
 > $$
 > where $\mathbf{u}(t)$ is $m$-dimensional.
 >
-> If $\mathbf{f}(t,\mathbf{u})=\mathbf{A}(t)\mathbf{u}+\mathbf{g}(t)$, the differential equation is linear; otherwise, it is nonlinear.
+> If $\mathbf{f}(t, \mathbf{u}) = \mathbf{A}(t)\mathbf{u} + \mathbf{g}(t)$, the differential equation is linear; otherwise, it is nonlinear.
 
 我们会交替使用 "IVP system" 与 "vector-valued IVP" 这两个说法. 把若干个标量 IVP 组装成上面的向量形式，通常只需要像前面的 predator-prey 例子那样做一个恰当的向量化定义.
 
@@ -55,14 +55,14 @@ $$
 把标量 IVP 求解器推广到系统情形通常很直接. 以 Euler 方法为例，它在系统形式下变成
 
 $$
-\mathbf{u}_{i+1}=\mathbf{u}_i+h\,\mathbf{f}(t_i,\mathbf{u}_i),\qquad i=0,\ldots,n-1.
+\mathbf{u}_{i+1} = \mathbf{u}_i + h\,\mathbf{f}(t_i, \mathbf{u}_i),\qquad i = 0, \ldots, n - 1.
 $$
 
-这只是把 Euler 公式同步应用到每个分量上. 因为向量加法、标量乘法等运算与标量情形一一对应，**6-2-Euler 方法** 里的 `euler` 实现不需要改动就能用于系统；实际要改的只是：初值与右端函数都要用向量来编码.
+这只是把 Euler 公式同步应用到每个分量上. 因为向量加法、标量乘法等运算与标量情形一一对应，**6-2-Euler 方法** 里的 `euler` 实现不需要改动就能用于系统；实际要改的只是: 初值与右端函数都要用向量来编码.
 
 > **Demo:** **Solving the predator-prey system**.
 >
-> ```Python
+> ```python
 > import numpy as np
 > import matplotlib.pyplot as plt
 > from scipy.integrate import solve_ivp
@@ -125,11 +125,11 @@ $$
 >
 > The Euler solution can lose accuracy quickly on this problem.
 
-当系统只有两个分量时，我们常把解画在相平面 (phase plane) 中：用 $u_1$ 与 $u_2$ 作坐标轴，把时间看作曲线参数.
+当系统只有两个分量时，我们常把解画在相平面 (phase plane) 中: 用 $u_1$ 与 $u_2$ 作坐标轴，把时间看作曲线参数.
 
 > **Demo:** **Predator-prey in the phase plane**.
 >
-> ```Python
+> ```python
 > import numpy as np
 > import matplotlib.pyplot as plt
 > from scipy.integrate import solve_ivp
@@ -170,50 +170,50 @@ $$
 
 **#4 高阶系统如何改写为一阶系统**
 
-一旦我们能够求解一阶 ODE 系统，也就能求解更高阶的 ODE 系统. 原因是：我们总能把高阶问题系统地改写成更高维的一阶系统.
+一旦我们能够求解一阶 ODE 系统，也就能求解更高阶的 ODE 系统. 原因是: 我们总能把高阶问题系统地改写成更高维的一阶系统.
 
 > **Example:** **Turning a second-order IVP into a first-order system**. Consider
 > $$
-> y''+(1+y')^3y=0,\qquad y(0)=y_0,\qquad y'(0)=0.
+> y'' + (1 + y')^3 y = 0,\qquad y(0) = y_0,\qquad y'(0) = 0.
 > $$
-> Define $u_1=y$ and $u_2=y'$. Then
+> Define $u_1 = y$ and $u_2 = y'$. Then
 > $$
-> u_1'=u_2,\qquad u_2'=-(1+u_2)^3u_1,
+> u_1' = u_2,\qquad u_2' = -(1 + u_2)^3 u_1,
 > $$
-> with initial condition $u_1(0)=y_0$, $u_2(0)=0$.
+> with initial condition $u_1(0) = y_0$, $u_2(0) = 0$.
 
-下面给出一个来自力学的例子：两只摆通过同一根杆耦合.
+下面给出一个来自力学的例子: 两只摆通过同一根杆耦合.
 
 > **Example:** **Coupled pendulums**. Two identical pendulums can be modeled as the second-order system
 > $$
 > \begin{aligned}
-> \theta_1''(t)+\gamma \theta_1'(t)+\frac{g}{L}\sin(\theta_1)+k(\theta_1-\theta_2) &= 0,\\
-> \theta_2''(t)+\gamma \theta_2'(t)+\frac{g}{L}\sin(\theta_2)+k(\theta_2-\theta_1) &= 0,
+> \theta_1''(t) + \gamma \theta_1'(t) + \frac{g}{L}\sin(\theta_1) + k(\theta_1 - \theta_2) &= 0,\\
+> \theta_2''(t) + \gamma \theta_2'(t) + \frac{g}{L}\sin(\theta_2) + k(\theta_2 - \theta_1) &= 0,
 > \end{aligned}
 > $$
-> where $\theta_1,\theta_2$ are angles, $L$ is the length of each pendulum, $\gamma$ is a friction parameter, and $k$ describes the coupling torque.
+> where $\theta_1, \theta_2$ are angles, $L$ is the length of each pendulum, $\gamma$ is a friction parameter, and $k$ describes the coupling torque.
 >
 > Introduce
 > $$
-> u_1=\theta_1,\quad u_2=\theta_2,\quad u_3=\theta_1',\quad u_4=\theta_2'.
+> u_1 = \theta_1,\quad u_2 = \theta_2,\quad u_3 = \theta_1',\quad u_4 = \theta_2'.
 > $$
 > Then the first-order system is
 > $$
 > \begin{aligned}
 > u_1' &= u_3,\\
 > u_2' &= u_4,\\
-> u_3' &= -\gamma u_3-\frac{g}{L}\sin(u_1)+k(u_2-u_1),\\
-> u_4' &= -\gamma u_4-\frac{g}{L}\sin(u_2)+k(u_1-u_2).
+> u_3' &= -\gamma u_3 - \frac{g}{L}\sin(u_1) + k(u_2 - u_1),\\
+> u_4' &= -\gamma u_4 - \frac{g}{L}\sin(u_2) + k(u_1 - u_2).
 > \end{aligned}
 > $$
 > To complete the IVP, one specifies $\theta_1(0)$, $\theta_1'(0)$, $\theta_2(0)$, and $\theta_2'(0)$.
 
 上面两个例子展示的技巧总是可用. 若原问题里有一个标量因变量 $y$，并且在方程中出现了 $y$ 的若干阶导数，那么我们就为 $y$、$y'$、$y''$ 等各引入一个分量，直到 (但不包含) $y$ 出现的最高阶导数为止. 对原系统里的每个标量因变量都做同样的处理.
 
-最终得到的一阶系统应当满足：
+最终得到的一阶系统应当满足:
 
 - 每个标量初值条件对应新向量 $\mathbf{u}$ 的一个分量.
-- 很多方程来自 "低阶导数之间的平凡关系" (例如 $u_1'=u_2$ 这类).
+- 很多方程来自 "低阶导数之间的平凡关系" (例如 $u_1' = u_2$ 这类).
 - 剩下的方程来自原来的高阶方程 (提供最高阶导数的表达式).
 - 一阶系统的标量方程个数与未知的一阶变量个数一致.
 
@@ -221,7 +221,7 @@ $$
 
 > **Demo:** **Coupled pendulums (uncoupled vs coupled)**.
 >
-> ```Python
+> ```python
 > import numpy as np
 > import matplotlib.pyplot as plt
 > from scipy.integrate import solve_ivp
