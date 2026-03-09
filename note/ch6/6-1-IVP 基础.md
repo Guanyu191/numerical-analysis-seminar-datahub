@@ -1,4 +1,4 @@
-# 6-1-IVP-基础 (Basics of IVPs)
+# 6-1-IVP 基础 (Basics of IVPs)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -63,7 +63,7 @@ $$
 u''(t)=f(t,u,u').
 $$
 
-一个二阶 IVP 在初始时刻需要两个条件才能完全确定解. 在后面的 **6-3-IVP-系统** 中，我们会把高阶 IVP 改写为一阶形式，因此后续只讨论一阶问题.
+一个二阶 IVP 在初始时刻需要两个条件才能完全确定解. 在后面的 **6-3-IVP 系统** 中，我们会把高阶 IVP 改写为一阶形式，因此后续只讨论一阶问题.
 
 **#3 数值解的基本形态**
 

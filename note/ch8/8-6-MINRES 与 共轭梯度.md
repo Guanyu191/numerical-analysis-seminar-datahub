@@ -1,4 +1,4 @@
-# 8-6-MINRES-与-共轭梯度 (MINRES and conjugate gradients)
+# 8-6-MINRES 与 共轭梯度 (MINRES and conjugate gradients)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -48,7 +48,7 @@ $$
 
 它最重要的工程优势是: Arnoldi 每步需要 $O(m)$ 次投影消去，而 Lanczos 每步只需要 $O(1)$ 次 (因为只涉及相邻两列). 这使得对对称问题而言，通常不需要像 GMRES 那样依赖重启来控制成本.
 
-> **Note?** 理论上，Lanczos 看起来只是 Arnoldi 的一个小改动. 但想得到数值稳定的实现，还需要额外的分析与技巧. 这里不展开细节.
+> **Note:** 理论上，Lanczos 看起来只是 Arnoldi 的一个小改动. 但想得到数值稳定的实现，还需要额外的分析与技巧. 这里不展开细节.
 
 **#2 MINRES**
 

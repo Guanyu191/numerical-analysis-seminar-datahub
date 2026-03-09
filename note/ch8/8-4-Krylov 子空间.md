@@ -1,4 +1,4 @@
-# 8-4-Krylov-子空间 (Krylov subspaces)
+# 8-4-Krylov 子空间 (Krylov subspaces)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -27,7 +27,7 @@ $$
 >
 > In general, we expect that the dimension of the Krylov subspace $\mathcal{K}_m$, which is the rank of $\mathbf{K}_m$, equals $m$, though it may be smaller.
 >
-> **Note?** "Krylov" 的常见英文发音近似 "kree-luv". 但在不同语境里也可能听到其他读法.
+> **Note:** "Krylov" 的常见英文发音近似 "kree-luv". 但在不同语境里也可能听到其他读法.
 
 **#2 Krylov 子空间的基本性质**
 
@@ -227,4 +227,4 @@ $$
 > print("rank([Q, K]) =", rank_QK)
 > ```
 >
-> **Note?** 上面的实现对应的是逐步去投影的 Gram-Schmidt 风格 (modified Gram-Schmidt). 在精确算术下，它与更 "公式化" 的写法等价，但数值稳定性通常更好.
+> **Note:** 上面的实现对应的是逐步去投影的 Gram-Schmidt 风格 (modified Gram-Schmidt). 在精确算术下，它与更 "公式化" 的写法等价，但数值稳定性通常更好.

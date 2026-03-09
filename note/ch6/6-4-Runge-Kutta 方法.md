@@ -1,4 +1,4 @@
-# 6-4-Runge-Kutta-方法 (Runge-Kutta methods)
+# 6-4-Runge-Kutta 方法 (Runge-Kutta methods)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -6,7 +6,7 @@
 
 **#1 Runge-Kutta 方法的基本想法**
 
-现在讨论初值问题里最重要、也最常用的一类方法：**Runge-Kutta (RK) methods**. 它们属于 **6-2-Euler-方法** 中定义的一步法，但通常不直接写成那种抽象形式. RK 方法通过在每个时间步内多次评估 ODE 右端函数 $f(t,u)$，把精度从一阶提升到更高阶.
+现在讨论初值问题里最重要、也最常用的一类方法：**Runge-Kutta (RK) methods**. 它们属于 **6-2-Euler 方法** 中定义的一步法，但通常不直接写成那种抽象形式. RK 方法通过在每个时间步内多次计算 ODE 右端函数 $f(t,u)$ 的数值，把精度从一阶提升到更高阶.
 
 **#2 一个二阶方法: improved Euler (IE2)**
 
@@ -34,7 +34,7 @@ $$
 f_t+f_u f.
 $$
 
-> **Note?** 这里 $f_t$ 与 $f_u$ 是对 $\partial f/\partial t$ 与 $\partial f/\partial u$ 的简写，默认在点 $(t,\hat{u}(t))$ 处取值. 对 IVP system，$f_u$ 变为一个 **Jacobian** 矩阵，此时 $f_u f$ 表示矩阵-向量乘法.
+> **Note:** 这里 $f_t$ 与 $f_u$ 是对 $\partial f/\partial t$ 与 $\partial f/\partial u$ 的简写，默认在点 $(t,\hat{u}(t))$ 处取值. 对 IVP system，$f_u$ 变为一个 **Jacobian** 矩阵，此时 $f_u f$ 表示矩阵-向量乘法.
 
 把它代回 Taylor 展开，可写成
 
@@ -188,7 +188,7 @@ $$
 \end{array}
 $$
 
-> **Note?** Euler、improved Euler (IE2)、以及 modified Euler (ME2) 是三个不同的方法.
+> **Note:** Euler、improved Euler (IE2)、以及 modified Euler (ME2) 是三个不同的方法.
 
 最常用的 RK 方法是下面这个四阶方法，通常就被称作 "四阶 RK"，我们记为 RK4.
 
@@ -231,7 +231,7 @@ $$
 
 **#5 精度与效率**
 
-对多阶段方法来说，每一个 stage 通常需要评估一次 $f$；因此一个 $s$-stage 方法的一步需要 $s$ 次 $f$ 的评估. 一般把 "评估 $f$ 的次数" 视为主要计算成本.
+对多阶段方法来说，每一个 stage 通常需要计算一次 $f$ 的数值；因此一个 $s$-stage 方法的一步需要 $s$ 次函数值计算. 一般把 "计算 $f$ 的次数" 视为主要计算成本.
 
 误差会随 $n$ 的增加呈几何下降，因此用更多 stage 换取更高精度阶往往划算. 但 stage 数越大，并不意味着精度阶可以无限增长：当 $s=5,6,7$ 时，最高精度阶是 $s-1$；当 $s=8,9$ 时，最高精度阶降为 $s-2$，等等. 在很多应用中，四阶被认为是足够且性价比很高的选择.
 

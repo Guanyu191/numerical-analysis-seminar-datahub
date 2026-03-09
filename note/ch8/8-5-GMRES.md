@@ -12,7 +12,7 @@ $$
 \mathbf{A}\mathbf{x}=\mathbf{b}.
 $$
 
-在 **8-4-Krylov-子空间** 中，我们尝试用 Krylov 子空间做降维：把线性系统替换为
+在 **8-4-Krylov 子空间** 中，我们尝试用 Krylov 子空间做降维：把线性系统替换为
 
 $$
 \min_{\mathbf{x}\in\mathcal{K}_m}\|\mathbf{A}\mathbf{x}-\mathbf{b}\|_2
@@ -94,7 +94,7 @@ $$
 
 在精确算术下，如果 $m=n$ (更准确地说，当 Krylov 子空间最终覆盖整个空间) ，GMRES 应当得到精确解. 但实际目标通常是让 $\|\mathbf{r}_m\|_2$ 足够小，从而在某个 $m\ll n$ 时就停止.
 
-> **Demo:** **Residual curve for GMRES**. We repeat the linear-system experiment from **8-4-Krylov-子空间**, but now we use an Arnoldi basis so that the residual decreases smoothly toward machine precision.
+> **Demo:** **Residual curve for GMRES**. We repeat the linear-system experiment from the previous section, but now we use an Arnoldi basis so that the residual decreases smoothly toward machine precision.
 >
 > ```Python
 > import numpy as np
@@ -256,4 +256,4 @@ $$
 
 除了重启之外，也存在一些避免 GMRES/Arnoldi 迭代中计算量持续增长的变体. 比较常见的缩写包括 CGS, BiCGSTAB, QMR. 本仓库暂不展开.
 
-> **Note?** GMRES 的前身之一是 MINRES，会在 **8-6-MINRES-与-共轭梯度** 出现.
+> **Note:** GMRES 的前身之一是 MINRES，会在 **8-6-MINRES 与 共轭梯度** 出现.

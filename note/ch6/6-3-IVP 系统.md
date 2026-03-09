@@ -1,4 +1,4 @@
-# 6-3-IVP-系统 (IVP systems)
+# 6-3-IVP 系统 (IVP systems)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -58,7 +58,7 @@ $$
 \mathbf{u}_{i+1}=\mathbf{u}_i+h\,\mathbf{f}(t_i,\mathbf{u}_i),\qquad i=0,\ldots,n-1.
 $$
 
-这只是把 Euler 公式同步应用到每个分量上. 因为向量加法、标量乘法等运算与标量情形一一对应，**6-2-Euler-方法** 里的 `euler` 实现不需要改动就能用于系统；实际要改的只是：初值与右端函数都要用向量来编码.
+这只是把 Euler 公式同步应用到每个分量上. 因为向量加法、标量乘法等运算与标量情形一一对应，**6-2-Euler 方法** 里的 `euler` 实现不需要改动就能用于系统；实际要改的只是：初值与右端函数都要用向量来编码.
 
 > **Demo:** **Solving the predator-prey system**.
 >

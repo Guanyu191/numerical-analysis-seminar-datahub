@@ -73,7 +73,7 @@ $$
 > print(np.kron(A, B))
 > ```
 >
-> 输出是一个 $4\times 6$ 矩阵，它由 $A$ 的每个元素乘上整块 $B$ 拼成.
+> The output is a $4\times 6$ matrix formed by multiplying each entry of $A$ by the entire block $B$.
 
 Kronecker 积满足很多看起来 "顺理成章" 的恒等式：
 
@@ -198,7 +198,7 @@ $$
 > print(U)
 > ```
 >
-> `spy` 图能直观看到 Kronecker 积与差分矩阵共同产生的稀疏结构；施加 Dirichlet 条件后，边界对应的那些行会被替换成单位阵的行.
+> The `spy` plot makes the sparsity pattern produced jointly by the Kronecker product and the differentiation matrices easy to see; after Dirichlet conditions are imposed, the boundary rows are replaced by rows of the identity matrix.
 
 **#7 一个通用实现：poissonfd**
 
@@ -269,7 +269,7 @@ $$
 >     return x, y, U
 > ```
 >
-> > **Note?** 对 Dirichlet 行做缩放相当于把边界条件写成 $\sigma u=\sigma g$. 这样做的动机是让边界行与 PDE 行的系数规模接近，从而改善线性系统的数值性态.
+> **Note:** 对 Dirichlet 行做缩放相当于把边界条件写成 $\sigma u=\sigma g$. 这样做的动机是让边界行与 PDE 行的系数规模接近，从而改善线性系统的数值性态.
 
 **#8 Demo：先选解再构造 forcing**
 
@@ -307,7 +307,7 @@ $$
 > plt.show()
 > ```
 >
-> 误差应该是关于 $(x,y)$ 的光滑函数，并且在边界上为 0；否则很可能是边界条件实现出了问题.
+> The error should be a smooth function of $(x,y)$ and should vanish on the boundary; otherwise, the boundary conditions were probably implemented incorrectly.
 
 **#9 精度与效率**
 

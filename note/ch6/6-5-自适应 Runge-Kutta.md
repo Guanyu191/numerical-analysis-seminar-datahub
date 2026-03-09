@@ -1,4 +1,4 @@
-# 6-5-自适应-Runge-Kutta (Adaptive Runge-Kutta)
+# 6-5-自适应 Runge-Kutta (Adaptive Runge-Kutta)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -6,7 +6,7 @@
 
 **#1 为什么需要自适应步长**
 
-初值问题方法的推导与分析通常假设固定步长 $h$. 虽然 **6-2-Euler-方法** 的误差定理保证了当 $h\to 0$ 时误差具有 $O(h^p)$ 的行为，但这个界里包含不可知的常数，因此并不能直接告诉我们在某个具体步长下误差大约是多少.
+初值问题方法的推导与分析通常假设固定步长 $h$. 虽然 **6-2-Euler 方法** 的误差定理保证了当 $h\to 0$ 时误差具有 $O(h^p)$ 的行为，但这个界里包含不可知的常数，因此并不能直接告诉我们在某个具体步长下误差大约是多少.
 
 更重要的是，固定步长在很多问题里并不高效：就像 **5-7-自适应积分** 一样，理想策略往往是 "哪里变化快就用小步，哪里变化慢就用大步". 对 IVP 来说，难点在于右端项 $f(t,u)$ 依赖于解本身，因此细节与积分问题有很大不同.
 
@@ -53,7 +53,7 @@ $$
 
 **#4 Embedded Runge-Kutta：共享 stages 的两套公式**
 
-如果我们真的分别运行两种 RK 方法来得到 $u_{i+1}$ 与 $\tilde u_{i+1}$，那么每个时间步要做的 $f(t,u)$ 评估次数会显著增加. 为了降低自适应的边际成本，我们使用 embedded RK formulas：两套不同阶的公式共享同一批内部 stages，只是用不同的线性组合得到不同阶的输出.
+如果我们真的分别运行两种 RK 方法来得到 $u_{i+1}$ 与 $\tilde u_{i+1}$，那么每个时间步要做的 $f(t,u)$ 函数值计算次数会显著增加. 为了降低自适应的边际成本，我们使用 embedded RK formulas：两套不同阶的公式共享同一批内部 stages，只是用不同的线性组合得到不同阶的输出.
 
 一个常用的嵌入对是 Bogacki–Shampine (BS23)：
 

@@ -1,4 +1,4 @@
-# 11-1-Black-Scholes-方程 (Black-Scholes equation)
+# 11-1-Black-Scholes 方程 (Black-Scholes equation)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
@@ -193,18 +193,18 @@ $$
 >
 > idx = np.arange(0, V.shape[1], 250)
 > for j in idx:
->     plt.plot(x, V[:, j], label=f\"t = {t[j]:.2f}\")
-> plt.title(\"Black-Scholes solution (finite differences)\")
-> plt.xlabel(\"stock price\")
-> plt.ylabel(\"option value\")
+>     plt.plot(x, V[:, j], label=f"t = {t[j]:.2f}")
+> plt.title("Black-Scholes solution (finite differences)")
+> plt.xlabel("stock price")
+> plt.ylabel("option value")
 > plt.grid(True, alpha=0.3)
-> plt.legend(loc=\"upper left\")
+> plt.legend(loc="upper left")
 > plt.show()
 > ```
 >
 > The curves are easy to interpret if we remember that the transformed time variable means time until strike.
 >
-> > **Note?** 如果我们希望把演化过程做成动画，可以用 `matplotlib.animation` 并保存为 mp4，但通常需要系统安装 `ffmpeg`.
+> **Note:** 如果我们希望把演化过程做成动画，可以用 `matplotlib.animation` 并保存为 mp4，但通常需要系统安装 `ffmpeg`.
 
 结果很好解释：此处的时间变量代表 "距离到期还有多久". 当我们离到期时刻很近时，期权价值应该接近收益函数 $H$. 当距离到期还有更久时，股价有更大的概率上涨，因此对固定的 $S$ 来说，期权价值会变大.
 
@@ -214,17 +214,17 @@ $$
 >
 > ```Python
 > x, t, V = solve_black_scholes_fd(T=8.0)
-> print(\"max(V)\", V.max())  # huge values indicate blow-up
+> print("max(V)", V.max())  # huge values indicate blow-up
 >
 > idx = np.arange(0, V.shape[1], 250)
 > for j in idx:
->     plt.plot(x, V[:, j], label=f\"t = {t[j]:.2f}\")
-> plt.title(\"This 'solution' is nonsense (blow-up)\")
-> plt.xlabel(\"stock price\")
-> plt.ylabel(\"option value\")
+>     plt.plot(x, V[:, j], label=f"t = {t[j]:.2f}")
+> plt.title("This 'solution' is nonsense (blow-up)")
+> plt.xlabel("stock price")
+> plt.ylabel("option value")
 > plt.ylim(0, 6)
 > plt.grid(True, alpha=0.3)
-> plt.legend(loc=\"upper left\")
+> plt.legend(loc="upper left")
 > plt.show()
 > ```
 

@@ -1,4 +1,4 @@
-# 10-6-Galerkin-方法 (The Galerkin method)
+# 10-6-Galerkin 方法 (The Galerkin method)
 
 这是一份数值计算学习笔记，参考了 Tobin A. Driscoll and Richard J. Braun 的教材 [*Fundamentals of Numerical Computation* (2023)](https://tobydriscoll.net/fnc-julia/home.html).
 
